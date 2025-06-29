@@ -81,7 +81,7 @@ function create() {
 
   scene.add.image(centerX, centerY, 'background');
   const leoX = 120;
-  const leoY = scene.scale.height - 170;
+  const leoY = scene.scale.height - 190;
   leo = scene.add.image(leoX, leoY, 'leo-serio').setScale(0.7);
 
   const isMobile = window.innerWidth < 600;
@@ -133,8 +133,8 @@ function mostrarNPC(key, x = null, y = null, finalX = null) {
   if (npc) npc.destroy();
 
   // Si no vienen coordenadas, ubicamos NPC a la derecha de Leo con espacio
-  const defaultX = leo.x + 150;
-  const defaultY = leo.y + 80;
+  const defaultX = leo.x + 170;
+  const defaultY = leo.y + 100;
   const targetX = finalX !== null ? finalX : defaultX;
 
   npc = scene.add.image(x !== null ? x : scene.scale.width + 100, y !== null ? y : defaultY, key).setScale(0.3);
