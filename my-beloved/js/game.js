@@ -115,7 +115,7 @@ function mostrarTextoConFondo(message, speed = 30, callback = null) {
   const padding = 20;
   const boxWidth = scene.scale.width - 40;
   const isMobile = scene.scale.width < 800;
-  const fontSize = isMobile ? '20px' : '16px';
+  const fontSize = isMobile ? '17px' : '16px';
 
   if (scene.textoFondo) scene.textoFondo.destroy();
   if (texto) texto.destroy();
@@ -128,14 +128,14 @@ function mostrarTextoConFondo(message, speed = 30, callback = null) {
     lineSpacing: 8,
     stroke: '#000000',
     strokeThickness: 4
-  }).setResolution(1);
+  }).setResolution(2);
 
   const tempText = scene.add.text(0, 0, message, texto.style).setWordWrapWidth(boxWidth - padding * 2).setVisible(false);
   const textHeight = tempText.height;
   const textWidth = boxWidth;
 
   const fondo = scene.add.graphics();
-  fondo.fillStyle(0x4b2991, 1);
+  fondo.fillStyle(0x8cb1dc, 1);
   fondo.fillRect(0, 0, textWidth, textHeight + padding * 2);
   fondo.setScrollFactor(0);
 
