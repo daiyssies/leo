@@ -127,7 +127,11 @@ function mostrarTextoConFondo(message, speed = 30, callback = null) {
 
   const fondo = scene.add.graphics();
   fondo.fillStyle(0x8cb1dc, 1);
-  fondo.fillRect(0, 0, textWidth, textHeight + padding * 2);
+  fondo.fillRoundedRect(0, 0, textWidth, textHeight + padding * 2, 10); // ← el 20 es el radio de la esquina
+  fondo.lineStyle(4, 0xffffff, 1); // grosor, color, opacidad
+fondo.strokeRoundedRect(0, 0, textWidth, textHeight + padding * 2, 20);
+
+
   fondo.setScrollFactor(0);
 
   const contenedor = scene.add.container(20, 30, [fondo, texto]);
