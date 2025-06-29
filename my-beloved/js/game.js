@@ -86,15 +86,7 @@ function create() {
 
   const isMobile = window.innerWidth < 600;
   const textoWidth = scene.scale.width - 40;
-  const fontSize = isMobile ? '25px' : '16px';
-
-  texto = scene.add.text(20, 20, '', {
-    fontFamily: '"Press Start 2P"',
-    fontSize: fontSize,
-    color: '#6b4d9d',
-    wordWrap: { width: textoWidth },
-    lineSpacing: 7.5
-  }).setResolution(1);
+  const fontSize = isMobile ? '17px' : '20px';
 
   scene.input.on('pointerdown', () => {
     if (!esperandoClick) return;
@@ -125,7 +117,7 @@ function mostrarTextoConFondo(message, speed = 30, callback = null) {
     fontSize: fontSize,
     color: '#ffffff',
     wordWrap: { width: boxWidth - padding * 2 },
-    lineSpacing: 8,
+    lineSpacing: 7,
     stroke: '#000000',
     strokeThickness: 4
   }).setResolution(2);
@@ -206,6 +198,7 @@ function avanzarHistoria() {
 
   switch (currentStep) {
     case 1:
+      texto.setFontSize(14);
       escribirTexto(texto, "¡Leito! Ahí estás...");
       break;
     case 2:
