@@ -81,7 +81,7 @@ function create() {
 
   scene.add.image(centerX, centerY, 'background');
   const leoX = 150;
-  const leoY = scene.scale.height - 190;
+  const leoY = scene.scale.height - 170;
   leo = scene.add.image(leoX, leoY, 'leo-serio').setScale(0.7);
 
   const isMobile = window.innerWidth < 600;
@@ -133,7 +133,7 @@ function mostrarNPC(key, x = null, y = null, finalX = null) {
   if (npc) npc.destroy();
 
   // Si no vienen coordenadas, ubicamos NPC a la derecha de Leo con espacio
-  const defaultX = leo.x + 150;
+  const defaultX = leo.x + 90;
   const defaultY = leo.y;
   const targetX = finalX !== null ? finalX : defaultX;
 
@@ -167,7 +167,7 @@ function avanzarHistoria() {
 
   switch (currentStep) {
     case 1:
-      texto.setFontSize(18);
+      texto.setFontSize(17);
       escribirTexto(texto, "¡Leito! Ahí estás...");
       break;
     case 2:
