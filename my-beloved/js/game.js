@@ -21,6 +21,12 @@ function startGame() {
     scene: {
       preload,
       create
+    },
+    scale: {
+      mode: Phaser.Scale.FIT,            // Escala para ajustarse a la pantalla
+      autoCenter: Phaser.Scale.CENTER_BOTH,  // Centra el canvas
+      width: 800,
+      height: 600
     }
   };
   game = new Phaser.Game(config);
@@ -89,7 +95,7 @@ function escribirTexto(textObject, message, speed = 30, callback) {
       i++;
       if (i === message.length) {
         timer.remove();
-        esperandoClick = true;  // Aquí activamos el click
+        esperandoClick = true;  // Aquí activamos el click para continuar
         if (callback) callback();
       }
     },
@@ -144,7 +150,6 @@ function avanzarHistoria() {
         "¡Hola Leo! Brinqué hasta aquí solo para decirte que eres muy amado 💕.",
         "¡Eso fue muy tierno!"
       );
-      // Lanzamos el primer paso para que empiece la secuencia
       if (pasos.length > 0) pasos.shift()();
       break;
 
