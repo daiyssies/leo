@@ -84,9 +84,6 @@ function create() {
   const leoY = scene.scale.height - 190;
   leo = scene.add.image(leoX, leoY, 'leo-serio').setScale(0.7);
 
-  const isMobile = window.innerWidth < 600;
-  const textoWidth = scene.scale.width - 40;
-  const fontSize = isMobile ? '17px' : '20px';
 
   scene.input.on('pointerdown', () => {
     if (!esperandoClick) return;
@@ -107,7 +104,7 @@ function mostrarTextoConFondo(message, speed = 30, callback = null) {
   const padding = 20;
   const boxWidth = scene.scale.width - 40;
   const isMobile = scene.scale.width < 800;
-  const fontSize = isMobile ? '17px' : '16px';
+  const fontSize = isMobile ? '14px' : '16px';
 
   if (scene.textoFondo) scene.textoFondo.destroy();
   if (texto) texto.destroy();
