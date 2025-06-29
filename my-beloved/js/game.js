@@ -27,7 +27,7 @@ function startGame() {
   const config = {
     type: Phaser.AUTO,
     width: 800,
-    height: 600,
+    height: 1000,
     parent: 'game-container',
     scale: {
       mode: Phaser.Scale.FIT,
