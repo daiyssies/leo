@@ -167,6 +167,7 @@ function avanzarHistoria() {
 
   switch (currentStep) {
     case 1:
+      texto.setFontSize(12);
       escribirTexto(texto, "¡Leito! Ahí estás...");
       break;
     case 2:
@@ -259,6 +260,7 @@ function avanzarHistoria() {
       escribirTexto(texto, "Un librito apareció, y en él está escrito todo lo que te quiero decir.");
       break;
     case 13:
+      texto.setFontSize(10);
       escribirTexto(texto, "Querido Leo: Gracias por existir. Gracias por ser tú. Eres lo mejor que me ha pasado y siempre quiero cuidarte 💖.");
       break;
     case 14:
