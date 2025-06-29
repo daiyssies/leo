@@ -18,20 +18,18 @@ function startGame() {
     width: 800,
     height: 600,
     parent: 'game-container',
+    scale: {
+      mode: Phaser.Scale.RESIZE,
+      autoCenter: Phaser.Scale.CENTER_BOTH
+    },
     scene: {
       preload,
       create
-    },
-    scale: {
-      mode: Phaser.Scale.FIT,
-      autoCenter: Phaser.Scale.CENTER_BOTH,
-      width: 800,
-      height: 600,
-      zoom: 1
     }
   };
   game = new Phaser.Game(config);
 }
+
 
 function preload() {
   scene = this;
