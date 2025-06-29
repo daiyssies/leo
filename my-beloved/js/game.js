@@ -197,7 +197,6 @@ function avanzarHistoria() {
 
   switch (currentStep) {
     case 1:
-      texto.setFontSize(14);
       escribirTexto(texto, "¡Leito! Ahí estás...");
       break;
     case 2:
