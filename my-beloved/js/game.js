@@ -86,7 +86,6 @@ function create() {
 
   const isMobile = window.innerWidth < 600;
   const textoWidth = scene.scale.width - 40;
-  const fontSize = isMobile ? '14px' : '16px';
 
   scene.input.on('pointerdown', () => {
     if (!esperandoClick) return;
