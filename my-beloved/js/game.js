@@ -81,7 +81,7 @@ function create() {
 
   scene.add.image(centerX, centerY, 'background');
   const leoX = 150;
-  const leoY = scene.scale.height - 150;
+  const leoY = scene.scale.height - 190;
   leo = scene.add.image(leoX, leoY, 'leo-serio').setScale(0.7);
 
   const isMobile = window.innerWidth < 600;
