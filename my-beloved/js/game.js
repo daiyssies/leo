@@ -7,9 +7,8 @@ let esperandoClick = false;
 let pasos = [];
 
 let fuenteCargada = false;
-const isMobile = window.innerWidth < 600;
 
-// Esperamos a que la fuente se cargue
+// Cargar fuente
 document.fonts.load('10pt "Press Start 2P"').then(() => {
   fuenteCargada = true;
   console.log('Fuente lista para usarse');
@@ -26,10 +25,13 @@ document.getElementById('start-button').addEventListener('click', () => {
 });
 
 function startGame() {
+  const canvasWidth = window.innerWidth;
+  const canvasHeight = window.innerHeight;
+
   const config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: canvasWidth,
+    height: canvasHeight,
     parent: 'game-container',
     scale: {
       mode: Phaser.Scale.FIT,
@@ -52,12 +54,10 @@ function preload() {
   scene = this;
   this.load.image('background', 'js/assets/fondo.png');
 
-  // Leo
   this.load.image('leo-serio', 'js/assets/character/leo_serio.png');
   this.load.image('leo-feli', 'js/assets/character/leo_feli.png');
   this.load.image('leo-sonriente', 'js/assets/character/leo_sonriente.png');
 
-  // NPCs
   const npcs = [
     'conejito',
     'florecita',
@@ -80,20 +80,15 @@ function create() {
   const centerY = scene.scale.height / 2;
 
   scene.add.image(centerX, centerY, 'background');
-
-  // Posición fija de Leo abajo a la izquierda
   const leoX = 150;
   const leoY = scene.scale.height - 150;
   leo = scene.add.image(leoX, leoY, 'leo-serio').setScale(0.7);
 
-  const container = document.getElementById('game-container');
-  // El ancho es el del contenedor menos un margen pequeño para que no quede pegado
-  const textoWidth = container.clientWidth - 40;
-
-  // Tamaño de fuente según móvil o escritorio
+  const isMobile = window.innerWidth < 600;
+  const textoWidth = scene.scale.width - 40;
   const fontSize = isMobile ? '25px' : '16px';
 
-  texto = scene.add.text(20, 50, '', {
+  texto = scene.add.text(20, 20, '', {
     fontFamily: '"Press Start 2P"',
     fontSize: fontSize,
     color: '#6b4d9d',
@@ -137,14 +132,12 @@ function escribirTexto(textObject, message, speed = 30, callback) {
 function mostrarNPC(key, x = null, y = null, finalX = null) {
   if (npc) npc.destroy();
 
-  // Posición por defecto: a la derecha de Leo
+  // Si no vienen coordenadas, ubicamos NPC a la derecha de Leo con espacio
   const defaultX = leo.x + 150;
   const defaultY = leo.y;
-  const startX = x !== null ? x : scene.scale.width + 100; // iniciar fuera a la derecha
   const targetX = finalX !== null ? finalX : defaultX;
-  const targetY = y !== null ? y : defaultY;
 
-  npc = scene.add.image(startX, targetY, key).setScale(0.3);
+  npc = scene.add.image(x !== null ? x : scene.scale.width + 100, y !== null ? y : defaultY, key).setScale(0.3);
   scene.tweens.add({
     targets: npc,
     x: targetX,
@@ -256,10 +249,10 @@ function avanzarHistoria() {
       escribirTexto(texto, "Ah… espera, hay algo más...");
       break;
     case 12:
-      mostrarNPC('libro', null, null, leo.x + 150);
+      mostrarNPC('libro', scene.scale.width / 2, scene.scale.height + 100, scene.scale.width / 2);
       scene.tweens.add({
         targets: npc,
-        y: leo.y - 50,
+        y: scene.scale.height / 2,
         duration: 1000,
         ease: 'Power2'
       });
@@ -273,7 +266,7 @@ function avanzarHistoria() {
       escribirTexto(texto, "🎁 Fin de la demo. Toca la pantalla para volver a empezar.");
       break;
     case 15:
-      location.reload(); // reiniciar la historia
+      location.reload();
       break;
     default:
       break;
