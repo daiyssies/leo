@@ -73,7 +73,7 @@ function create() {
 
  texto = scene.add.text(50, 50, '', {
   fontFamily: '"Press Start 2P"',
-  fontSize: 16,
+  fontSize: 25,
   color: '#6b4d9d',
   wordWrap: { width: 700 }
 }).setScale(scaleFactor).setResolution(2);
