@@ -67,7 +67,7 @@ function create() {
     fontSize: 32,
     color: '#6b4d9d',
     wordWrap: { width: 700 }
-  });
+  }).setScale(1.5);
 
   scene.input.on('pointerdown', () => {
     if (!esperandoClick) return;
