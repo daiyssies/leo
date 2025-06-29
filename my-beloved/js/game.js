@@ -6,6 +6,7 @@ let scene;
 let esperandoClick = false;
 let pasos = [];
 
+document.fonts.load('10pt "Press Start 2P"').then(startGame);
 document.getElementById('start-button').addEventListener('click', () => {
   document.getElementById('main-menu').style.display = 'none';
   document.getElementById('game-container').style.display = 'block';
