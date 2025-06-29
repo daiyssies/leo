@@ -71,12 +71,12 @@ function create() {
   // Escala adaptativa para móviles
   const scaleFactor = window.innerWidth < 600 ? 2 : 1.5;
 
-  texto = scene.add.text(50, 50, '', {
-    fontFamily: 'Press Start 2P',
-    fontSize: 20, // en número, no px
-    color: '#6b4d9d',
-    wordWrap: { width: 700 }
-  }).setScale(scaleFactor).setResolution(2);
+ texto = scene.add.text(50, 50, '', {
+  fontFamily: '"Press Start 2P"',
+  fontSize: 16,
+  color: '#6b4d9d',
+  wordWrap: { width: 700 }
+}).setScale(scaleFactor).setResolution(2);
 
   scene.input.on('pointerdown', () => {
     if (!esperandoClick) return;
