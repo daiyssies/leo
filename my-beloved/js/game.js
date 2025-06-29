@@ -134,7 +134,7 @@ function mostrarNPC(key, x = null, y = null, finalX = null) {
 
   // Si no vienen coordenadas, ubicamos NPC a la derecha de Leo con espacio
   const defaultX = leo.x + 170;
-  const defaultY = leo.y + 100;
+  const defaultY = leo.y + 90;
   const targetX = finalX !== null ? finalX : defaultX;
 
   npc = scene.add.image(x !== null ? x : scene.scale.width + 100, y !== null ? y : defaultY, key).setScale(0.3);
@@ -167,7 +167,7 @@ function avanzarHistoria() {
 
   switch (currentStep) {
     case 1:
-      texto.setFontSize(16);
+      texto.setFontSize(14);
       escribirTexto(texto, "¡Leito! Ahí estás...");
       break;
     case 2:
