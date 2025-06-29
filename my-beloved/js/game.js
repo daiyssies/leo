@@ -72,7 +72,7 @@ function create() {
   const container = document.getElementById('game-container');
   const textoWidth = container.clientWidth - 40;
   const isMobile = window.innerWidth < 600;
-  const fontSize = isMobile ? '25px' : '16px';
+  const fontSize = isMobile ? '20px' : '16px';
   textoFontSize = parseInt(fontSize); // Guarda el número como entero
 
   texto = scene.add.text(50, 50, '', {
