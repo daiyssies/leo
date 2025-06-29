@@ -78,10 +78,9 @@ function create() {
   scene.add.image(400, 300, 'background');
   leo = scene.add.image(400, 400, 'leo-serio').setScale(0.7);
 
-  const isMobile = window.innerWidth < 700;
-  const fontSize = isMobile ? '20px' : '14px';
-  const wrapWidth = isMobile ? 500 : 700;
-  const textoWidth = window.innerWidth - 40; // un poco de margen a los lados
+ const container = document.getElementById('game-container');
+const textoWidth = container.clientWidth - 40; // un margen de 20px a cada lado
+const fontSize = isMobile ? '32px' : '16px';
 
 
   texto = scene.add.text(50, 50, '', {
