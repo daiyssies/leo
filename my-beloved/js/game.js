@@ -78,7 +78,7 @@ function create() {
   scene.add.image(400, 300, 'background');
   leo = scene.add.image(400, 400, 'leo-serio').setScale(0.7);
 
-  const isMobile = window.innerWidth < 600;
+  const isMobile = window.innerWidth < 700;
   const fontSize = isMobile ? '20px' : '14px';
   const wrapWidth = isMobile ? 500 : 700;
 
@@ -87,7 +87,7 @@ function create() {
     fontSize: fontSize,
     color: '#6b4d9d',
     wordWrap: { width: wrapWidth }
-  }).setResolution(2);
+  }).setResolution(1);
 
   scene.input.on('pointerdown', () => {
     if (!esperandoClick) return;
