@@ -74,7 +74,7 @@ const fontSize = isMobile ? '32px' : '22px';
 const wrapWidth = isMobile ? 500 : 700;
 
 texto = scene.add.text(50, 50, '', {
-  fontFamily: '"VT323"',
+  fontFamily: '"Press Start 2P"',
   fontSize: isMobile ? '48px' : '28px',
   color: '#6b4d9d',
   wordWrap: { width: wrapWidth }
