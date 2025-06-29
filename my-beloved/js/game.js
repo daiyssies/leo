@@ -139,7 +139,7 @@ function mostrarTextoConFondo(message, speed = 30, callback = null) {
   fondo.fillRect(0, 0, textWidth, textHeight + padding * 2);
   fondo.setScrollFactor(0);
 
-  const contenedor = scene.add.container(20, scene.scale.height - (textHeight + padding * 2 + 30), [fondo, texto]);
+  const contenedor = scene.add.container(20, 30, [fondo, texto]);
   texto.setPosition(padding, padding);
 
   scene.textoFondo = contenedor;
