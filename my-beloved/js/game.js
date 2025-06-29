@@ -81,12 +81,15 @@ function create() {
   const isMobile = window.innerWidth < 700;
   const fontSize = isMobile ? '20px' : '14px';
   const wrapWidth = isMobile ? 500 : 700;
+  const textoWidth = window.innerWidth - 40; // un poco de margen a los lados
+
 
   texto = scene.add.text(50, 50, '', {
     fontFamily: '"Press Start 2P"',
     fontSize: fontSize,
     color: '#6b4d9d',
-    wordWrap: { width: wrapWidth }
+    wordWrap: { width: textoWidth },
+  lineSpacing: 8
   }).setResolution(1);
 
   scene.input.on('pointerdown', () => {
