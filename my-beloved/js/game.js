@@ -134,7 +134,7 @@ function mostrarNPC(key, x = null, y = null, finalX = null) {
 
   // Si no vienen coordenadas, ubicamos NPC a la derecha de Leo con espacio
   const defaultX = leo.x + 170;
-  const defaultY = leo.y + 90;
+  const defaultY = leo.y + 70;
   const targetX = finalX !== null ? finalX : defaultX;
 
   npc = scene.add.image(x !== null ? x : scene.scale.width + 100, y !== null ? y : defaultY, key).setScale(0.3);
