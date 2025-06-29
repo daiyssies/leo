@@ -62,12 +62,14 @@ function create() {
   scene.add.image(400, 300, 'background');
   leo = scene.add.image(400, 400, 'leo-serio').setScale(0.7);
 
-  texto = scene.add.text(50, 50, '', {
-    fontFamily: 'Press Start 2P',
-    fontSize: 32,
-    color: '#6b4d9d',
-    wordWrap: { width: 700 }
-  }).setScale(1.5);
+  const scaleFactor = window.innerWidth < 600 ? 2 : 1.5;
+
+texto = scene.add.text(50, 50, '', {
+  fontFamily: 'Press Start 2P',
+  fontSize: 22,
+  color: '#6b4d9d',
+  wordWrap: { width: 700 }
+}).setScale(scaleFactor);
 
   scene.input.on('pointerdown', () => {
     if (!esperandoClick) return;
