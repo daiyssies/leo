@@ -23,10 +23,11 @@ function startGame() {
       create
     },
     scale: {
-      mode: Phaser.Scale.FIT,            // Escala para ajustarse a la pantalla
-      autoCenter: Phaser.Scale.CENTER_BOTH,  // Centra el canvas
+      mode: Phaser.Scale.FIT,
+      autoCenter: Phaser.Scale.CENTER_BOTH,
       width: 800,
-      height: 600
+      height: 600,
+      zoom: 1
     }
   };
   game = new Phaser.Game(config);
