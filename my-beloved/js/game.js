@@ -84,6 +84,9 @@ function create() {
   const leoY = scene.scale.height - 190;
   leo = scene.add.image(leoX, leoY, 'leo-serio').setScale(0.7);
 
+  const isMobile = window.innerWidth < 600;
+  const textoWidth = scene.scale.width - 40;
+  const fontSize = isMobile ? '14px' : '16px';
 
   scene.input.on('pointerdown', () => {
     if (!esperandoClick) return;
