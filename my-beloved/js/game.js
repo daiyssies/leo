@@ -74,11 +74,11 @@ const fontSize = isMobile ? '32px' : '22px';
 const wrapWidth = isMobile ? 500 : 700;
 
 texto = scene.add.text(50, 50, '', {
-  fontFamily: '"Press Start 2P"',
-  fontSize: fontSize,
+  fontFamily: '"VT323"',
+  fontSize: isMobile ? '48px' : '28px',
   color: '#6b4d9d',
   wordWrap: { width: wrapWidth }
-}).setResolution(3);
+}).setResolution(2);
 
   scene.input.on('pointerdown', () => {
     if (!esperandoClick) return;
