@@ -79,7 +79,7 @@ function create() {
   leo = scene.add.image(400, 400, 'leo-serio').setScale(0.7);
 
   const isMobile = window.innerWidth < 600;
-  const fontSize = isMobile ? '20px' : '18px';
+  const fontSize = isMobile ? '20px' : '16px';
   const wrapWidth = isMobile ? 500 : 700;
 
   texto = scene.add.text(50, 50, '', {
