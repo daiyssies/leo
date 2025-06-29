@@ -19,7 +19,7 @@ function startGame() {
     height: 600,
     parent: 'game-container',
     scale: {
-      mode: Phaser.Scale.RESIZE,
+      mode: Phaser.Scale.FIT,
       autoCenter: Phaser.Scale.CENTER_BOTH
     },
     scene: {
