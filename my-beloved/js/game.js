@@ -8,7 +8,6 @@ let pasos = [];
 let fuenteCargada = false;
 let textoFontSize = null; // NUEVO: variable para guardar tamaño de fuente
 
-// Esperamos a que la fuente se cargue
 document.fonts.load('10pt "Press Start 2P"').then(() => {
   fuenteCargada = true;
   console.log('Fuente lista para usarse');
@@ -72,7 +71,7 @@ function create() {
   const container = document.getElementById('game-container');
   const textoWidth = container.clientWidth - 40;
   const isMobile = window.innerWidth < 600;
-  const fontSize = isMobile ? '20px' : '16px';
+  const fontSize = isMobile ? '18px' : '14px';
   textoFontSize = parseInt(fontSize); // Guarda el número como entero
 
   texto = scene.add.text(50, 50, '', {
@@ -80,7 +79,7 @@ function create() {
     fontSize: fontSize,
     color: '#6b4d9d',
     wordWrap: { width: textoWidth },
-    lineSpacing: 8
+    lineSpacing: 9
   }).setResolution(1);
 
   scene.input.on('pointerdown', () => {
