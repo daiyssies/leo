@@ -5,10 +5,9 @@ let scene;
 
 let esperandoClick = false;
 let pasos = [];
-
 let fuenteCargada = false;
 
-// Cargamos la fuente antes de iniciar el juego
+// Esperar a que la fuente se cargue antes de iniciar el juego
 document.fonts.load('10pt "Press Start 2P"').then(() => {
   fuenteCargada = true;
   console.log('Fuente lista para usarse');
@@ -51,22 +50,14 @@ function preload() {
   scene = this;
   this.load.image('background', 'js/assets/fondo.png');
 
-  // Leo
   this.load.image('leo-serio', 'js/assets/character/leo_serio.png');
   this.load.image('leo-feli', 'js/assets/character/leo_feli.png');
   this.load.image('leo-sonriente', 'js/assets/character/leo_sonriente.png');
 
-  // NPCs
   const npcs = [
-    'conejito',
-    'florecita',
-    'fresita',
-    'gatito',
-    'estrella',
-    'carta',
-    'caja_chocolates',
-    'niña_fresita',
-    'libro'
+    'conejito', 'florecita', 'fresita',
+    'gatito', 'estrella', 'carta',
+    'caja_chocolates', 'niña_fresita', 'libro'
   ];
 
   npcs.forEach(name => {
@@ -103,7 +94,10 @@ function create() {
     }
   });
 
-  avanzarHistoria();
+  // Esperamos un poquito para asegurarnos de que todo esté creado antes de avanzar
+  scene.time.delayedCall(100, () => {
+    avanzarHistoria();
+  });
 }
 
 function escribirTexto(textObject, message, speed = 30, callback) {
@@ -255,7 +249,7 @@ function avanzarHistoria() {
       escribirTexto(texto, "🎁 Fin de la demo. Toca la pantalla para volver a empezar.");
       break;
     case 15:
-      location.reload(); // reiniciar la historia
+      location.reload();
       break;
     default:
       break;
