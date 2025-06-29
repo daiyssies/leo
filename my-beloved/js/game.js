@@ -111,18 +111,15 @@ function create() {
   avanzarHistoria();
 }
 
-// Agrega esta función nueva al final del archivo antes de avanzarHistoria()
-function escribirTexto(message, speed = 30, callback = null) {
+function mostrarTextoConFondo(message, speed = 30, callback = null) {
   const padding = 20;
   const boxWidth = scene.scale.width - 40;
   const isMobile = scene.scale.width < 800;
   const fontSize = isMobile ? '20px' : '16px';
 
-  // Elimina texto y fondo anteriores si existen
   if (scene.textoFondo) scene.textoFondo.destroy();
   if (texto) texto.destroy();
 
-  // Crear texto vacío para ir escribiendo letra por letra
   texto = scene.add.text(0, 0, '', {
     fontFamily: '"Press Start 2P"',
     fontSize: fontSize,
@@ -133,26 +130,21 @@ function escribirTexto(message, speed = 30, callback = null) {
     strokeThickness: 4
   }).setResolution(1);
 
-  // Texto temporal para calcular el alto real
   const tempText = scene.add.text(0, 0, message, texto.style).setWordWrapWidth(boxWidth - padding * 2).setVisible(false);
   const textHeight = tempText.height;
   const textWidth = boxWidth;
 
-  // Fondo morado
   const fondo = scene.add.graphics();
   fondo.fillStyle(0x4b2991, 1);
   fondo.fillRect(0, 0, textWidth, textHeight + padding * 2);
   fondo.setScrollFactor(0);
 
-  // Contenedor que agrupa fondo y texto
   const contenedor = scene.add.container(20, scene.scale.height - (textHeight + padding * 2 + 30), [fondo, texto]);
   texto.setPosition(padding, padding);
 
-  // Guardar para poder destruir después
   scene.textoFondo = contenedor;
   tempText.destroy();
 
-  // Efecto letra por letra
   let i = 0;
   let timer = scene.time.addEvent({
     delay: speed,
@@ -173,16 +165,13 @@ function escribirTexto(message, speed = 30, callback = null) {
   });
 }
 
-// Reemplazo de todas las llamadas anteriores a escribirTexto
 function escribirTexto(textObject, message, speed = 30, callback) {
   mostrarTextoConFondo(message, speed, callback);
 }
 
-
 function mostrarNPC(key, x = null, y = null, finalX = null) {
   if (npc) npc.destroy();
 
-  // Si no vienen coordenadas, ubicamos NPC a la derecha de Leo con espacio
   const defaultX = leo.x + 170;
   const defaultY = leo.y + 65;
   const targetX = finalX !== null ? finalX : defaultX;
@@ -217,19 +206,17 @@ function avanzarHistoria() {
 
   switch (currentStep) {
     case 1:
-      texto.setFontSize(14);
       escribirTexto(texto, "¡Leito! Ahí estás...");
       break;
     case 2:
       leo.setTexture('leo-feli');
       escribirTexto(texto, "Te estaba buscando");
-      escribirTexto(texto, "¡Te tengo una sorpresa!");
+      pasos.push(() => escribirTexto(texto, "¡Te tengo una sorpresa!"));
       break;
     case 3:
       dialogoNPC(
         'conejito',
         "¡Mira quién viene ahí...!",
-        "¡Hola Leo! Brinqué hasta aquí solo para pasarte un mensaje importante.",
         "¡Hola Leo! Brinqué hasta aquí solo para pasarte un mensaje importante.",
         "¡Eso fue muy tierno!"
       );
@@ -238,7 +225,7 @@ function avanzarHistoria() {
     case 4:
       dialogoNPC(
         'florecita',
-        "¡Hola Leo! ",
+        "¡Hola Leo!",
         "Este pétalo es suave como el cariño que te tienen... y perfumadito como tú.",
         "¡Qué bonito detalle!"
       );
@@ -312,11 +299,9 @@ function avanzarHistoria() {
       escribirTexto(texto, "Un librito apareció, y en él está escrito todo lo que te quiero decir.");
       break;
     case 13:
-      texto.setFontSize(10);
       escribirTexto(texto, "Querido Leo: Gracias por existir. Gracias por ser tú. Eres lo mejor que me ha pasado y siempre quiero cuidarte.");
       break;
     case 14:
-      texto.setFontSize(10);
       escribirTexto(texto, "Fin de la demo. Toca la pantalla para volver a empezar.");
       break;
     case 15:
