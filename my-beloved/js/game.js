@@ -111,23 +111,73 @@ function create() {
   avanzarHistoria();
 }
 
-function escribirTexto(textObject, message, speed = 30, callback) {
-  textObject.setText('');
+// Agrega esta función nueva al final del archivo antes de avanzarHistoria()
+function escribirTexto(message, speed = 30, callback = null) {
+  const padding = 20;
+  const boxWidth = scene.scale.width - 40;
+  const isMobile = scene.scale.width < 800;
+  const fontSize = isMobile ? '20px' : '16px';
+
+  // Elimina texto y fondo anteriores si existen
+  if (scene.textoFondo) scene.textoFondo.destroy();
+  if (texto) texto.destroy();
+
+  // Crear texto vacío para ir escribiendo letra por letra
+  texto = scene.add.text(0, 0, '', {
+    fontFamily: '"Press Start 2P"',
+    fontSize: fontSize,
+    color: '#ffffff',
+    wordWrap: { width: boxWidth - padding * 2 },
+    lineSpacing: 8,
+    stroke: '#000000',
+    strokeThickness: 4
+  }).setResolution(1);
+
+  // Texto temporal para calcular el alto real
+  const tempText = scene.add.text(0, 0, message, texto.style).setWordWrapWidth(boxWidth - padding * 2).setVisible(false);
+  const textHeight = tempText.height;
+  const textWidth = boxWidth;
+
+  // Fondo morado
+  const fondo = scene.add.graphics();
+  fondo.fillStyle(0x4b2991, 1);
+  fondo.fillRect(0, 0, textWidth, textHeight + padding * 2);
+  fondo.setScrollFactor(0);
+
+  // Contenedor que agrupa fondo y texto
+  const contenedor = scene.add.container(20, scene.scale.height - (textHeight + padding * 2 + 30), [fondo, texto]);
+  texto.setPosition(padding, padding);
+
+  // Guardar para poder destruir después
+  scene.textoFondo = contenedor;
+  tempText.destroy();
+
+  // Efecto letra por letra
   let i = 0;
   let timer = scene.time.addEvent({
     delay: speed,
     callback: () => {
-      textObject.text += message[i];
+      texto.text += message[i];
       i++;
       if (i === message.length) {
         timer.remove();
         esperandoClick = true;
-        if (callback) callback();
+        scene.input.once('pointerdown', () => {
+          esperandoClick = false;
+          contenedor.destroy();
+          if (callback) callback();
+        });
       }
     },
     loop: true
   });
 }
+
+// Reemplazo de todas las llamadas anteriores a escribirTexto
+function escribirTexto(textObject, message, speed = 30, callback) {
+  mostrarTextoConFondo(message, speed, callback);
+}
+
 
 function mostrarNPC(key, x = null, y = null, finalX = null) {
   if (npc) npc.destroy();
@@ -172,13 +222,15 @@ function avanzarHistoria() {
       break;
     case 2:
       leo.setTexture('leo-feli');
-      escribirTexto(texto, "Te estaba buscando, ¡te tengo una sorpresa!");
+      escribirTexto(texto, "Te estaba buscando");
+      escribirTexto(texto, "¡Te tengo una sorpresa!");
       break;
     case 3:
       dialogoNPC(
         'conejito',
         "¡Mira quién viene ahí...!",
-        "¡Hola Leo! Brinqué hasta aquí solo para decirte que eres muy amado.",
+        "¡Hola Leo! Brinqué hasta aquí solo para pasarte un mensaje importante.",
+        "¡Hola Leo! Brinqué hasta aquí solo para pasarte un mensaje importante.",
         "¡Eso fue muy tierno!"
       );
       if (pasos.length > 0) pasos.shift()();
