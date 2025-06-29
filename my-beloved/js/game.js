@@ -68,14 +68,10 @@ function create() {
   scene.add.image(400, 300, 'background');
   leo = scene.add.image(400, 400, 'leo-serio').setScale(0.7);
 
-  // Escala adaptativa para móviles
-  const isMobile = window.innerWidth < 600;
-const fontSize = isMobile ? '32px' : '22px';
-const wrapWidth = isMobile ? 500 : 700;
 
 texto = scene.add.text(50, 50, '', {
   fontFamily: '"Press Start 2P"',
-  fontSize: isMobile ? '48px' : '28px',
+  fontSize: isMobile ? '38px' : '18px',
   color: '#6b4d9d',
   wordWrap: { width: wrapWidth }
 }).setResolution(2);
