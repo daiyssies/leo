@@ -54,3 +54,10 @@
     font-size: 0.8em;
     color: #ffffff;
     }
+
+    #game-container {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
