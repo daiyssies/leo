@@ -134,7 +134,7 @@ function mostrarNPC(key, x = null, y = null, finalX = null) {
 
   // Si no vienen coordenadas, ubicamos NPC a la derecha de Leo con espacio
   const defaultX = leo.x + 170;
-  const defaultY = leo.y + 100;
+  const defaultY = leo.y + 110;
   const targetX = finalX !== null ? finalX : defaultX;
 
   npc = scene.add.image(x !== null ? x : scene.scale.width + 100, y !== null ? y : defaultY, key).setScale(0.3);
@@ -178,7 +178,7 @@ function avanzarHistoria() {
       dialogoNPC(
         'conejito',
         "¡Mira quién viene ahí...!",
-        "¡Hola Leo! Brinqué hasta aquí solo para decirte que eres muy amado 💕.",
+        "¡Hola Leo! Brinqué hasta aquí solo para decirte que eres muy amado.",
         "¡Eso fue muy tierno!"
       );
       if (pasos.length > 0) pasos.shift()();
@@ -186,7 +186,7 @@ function avanzarHistoria() {
     case 4:
       dialogoNPC(
         'florecita',
-        "¡Hola Leo! 🌼",
+        "¡Hola Leo! ",
         "Este pétalo es suave como el cariño que te tienen... y perfumadito como tú.",
         "¡Qué bonito detalle!"
       );
@@ -196,8 +196,8 @@ function avanzarHistoria() {
       dialogoNPC(
         'fresita',
         "¡Tú eres más dulce que yo!",
-        "Así que vine a darte un abrazo invisible 🍓✨.",
-        "Awww 🥺💗"
+        "Así que vine a darte un abrazo invisible.",
+        "Awww"
       );
       if (pasos.length > 0) pasos.shift()();
       break;
@@ -205,7 +205,7 @@ function avanzarHistoria() {
       dialogoNPC(
         'gatito',
         "Miau~",
-        "Incluso en los días grises, tú haces que todo se sienta más cálido 🐾.",
+        "Incluso en los días grises, tú haces que todo se sienta más cálido.",
         "¡Gracias, minino!"
       );
       if (pasos.length > 0) pasos.shift()();
@@ -213,7 +213,7 @@ function avanzarHistoria() {
     case 7:
       dialogoNPC(
         'estrella',
-        "Hola Leo ✨",
+        "Hola Leo",
         "Brillas más de lo que crees. Alguien te ve como su luz.",
         "¡Qué palabras tan bonitas!"
       );
@@ -223,7 +223,7 @@ function avanzarHistoria() {
       dialogoNPC(
         'carta',
         "¡Toma esto!",
-        "Esta cartita guarda una promesa: la de nunca soltarte el corazón 💌.",
+        "Esta cartita guarda una promesa: la de nunca soltarte el corazón.",
         "¡Me la voy a guardar siempre!"
       );
       if (pasos.length > 0) pasos.shift()();
@@ -232,7 +232,7 @@ function avanzarHistoria() {
       dialogoNPC(
         'caja_chocolates',
         "¡Un regalito~!",
-        "No solo son dulces, llevan besitos escondidos... pero no le digas a nadie 🍫😘.",
+        "No solo son dulces, llevan besitos escondidos... pero no le digas a nadie.",
         "¡Jajaja, qué dulce!"
       );
       if (pasos.length > 0) pasos.shift()();
@@ -241,7 +241,7 @@ function avanzarHistoria() {
       dialogoNPC(
         'niña_fresita',
         "¡Hola Leo!",
-        "Alguien me dijo que eres su persona favorita en todo el universo 💗.",
+        "Alguien me dijo que eres su persona favorita en todo el universo.",
         "¡Eso me llena el corazón!"
       );
       if (pasos.length > 0) pasos.shift()();
@@ -261,11 +261,11 @@ function avanzarHistoria() {
       break;
     case 13:
       texto.setFontSize(10);
-      escribirTexto(texto, "Querido Leo: Gracias por existir. Gracias por ser tú. Eres lo mejor que me ha pasado y siempre quiero cuidarte 💖.");
+      escribirTexto(texto, "Querido Leo: Gracias por existir. Gracias por ser tú. Eres lo mejor que me ha pasado y siempre quiero cuidarte.");
       break;
     case 14:
       texto.setFontSize(10);
-      escribirTexto(texto, "🎁 Fin de la demo. Toca la pantalla para volver a empezar.");
+      escribirTexto(texto, "Fin de la demo. Toca la pantalla para volver a empezar.");
       break;
     case 15:
       location.reload();
