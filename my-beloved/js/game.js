@@ -106,7 +106,7 @@ function mostrarTextoConFondo(message, speed = 30, callback = null) {
   const padding = 20;
   const boxWidth = scene.scale.width - 40;
   const isMobile = scene.scale.width < 800;
-  const fontSize = isMobile ? '14px' : '16px';
+  const fontSize = isMobile ? '13px' : '16px';
 
   if (scene.textoFondo) scene.textoFondo.destroy();
   if (texto) texto.destroy();
@@ -118,8 +118,8 @@ function mostrarTextoConFondo(message, speed = 30, callback = null) {
     wordWrap: { width: boxWidth - padding * 2 },
     lineSpacing: 7,
     stroke: '#000000',
-    strokeThickness: 4
-  }).setResolution(2);
+    strokeThickness: 3
+  }).setResolution(3);
 
   const tempText = scene.add.text(0, 0, message, texto.style).setWordWrapWidth(boxWidth - padding * 2).setVisible(false);
   const textHeight = tempText.height;
