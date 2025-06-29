@@ -56,8 +56,17 @@
     }
 
     #game-container {
-      width: 100%;
-      max-width: 800px;
-      margin: 0 auto;
-    }
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  touch-action: manipulation; /* ayuda a evitar zoom por doble tap en algunos navegadores */
+}
+
+#game-container canvas {
+  max-width: 100%;
+  height: auto !important;
+  display: block;
+  margin: 0 auto;
+}
+
 
