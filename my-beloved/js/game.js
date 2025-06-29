@@ -7,6 +7,7 @@ let esperandoClick = false;
 let pasos = [];
 
 document.fonts.load('10pt "Press Start 2P"').then(startGame);
+
 document.getElementById('start-button').addEventListener('click', () => {
   document.getElementById('main-menu').style.display = 'none';
   document.getElementById('game-container').style.display = 'block';
@@ -23,6 +24,11 @@ function startGame() {
       mode: Phaser.Scale.FIT,
       autoCenter: Phaser.Scale.CENTER_BOTH
     },
+    pixelArt: true,
+    render: {
+      pixelArt: true,
+      roundPixels: true
+    },
     scene: {
       preload,
       create
@@ -30,7 +36,6 @@ function startGame() {
   };
   game = new Phaser.Game(config);
 }
-
 
 function preload() {
   scene = this;
@@ -63,14 +68,15 @@ function create() {
   scene.add.image(400, 300, 'background');
   leo = scene.add.image(400, 400, 'leo-serio').setScale(0.7);
 
+  // Escala adaptativa para móviles
   const scaleFactor = window.innerWidth < 600 ? 2 : 1.5;
 
-texto = scene.add.text(50, 50, '', {
-  fontFamily: 'Press Start 2P',
-  fontSize: 22,
-  color: '#6b4d9d',
-  wordWrap: { width: 700 }
-}).setScale(scaleFactor);
+  texto = scene.add.text(50, 50, '', {
+    fontFamily: 'Press Start 2P',
+    fontSize: 16, // en número, no px
+    color: '#6b4d9d',
+    wordWrap: { width: 700 }
+  }).setScale(scaleFactor).setResolution(2);
 
   scene.input.on('pointerdown', () => {
     if (!esperandoClick) return;
@@ -97,7 +103,7 @@ function escribirTexto(textObject, message, speed = 30, callback) {
       i++;
       if (i === message.length) {
         timer.remove();
-        esperandoClick = true;  // Aquí activamos el click para continuar
+        esperandoClick = true;
         if (callback) callback();
       }
     },
@@ -139,12 +145,10 @@ function avanzarHistoria() {
     case 1:
       escribirTexto(texto, "¡Leito! Ahí estás...");
       break;
-
     case 2:
       leo.setTexture('leo-feli');
       escribirTexto(texto, "Te estaba buscando, ¡te tengo una sorpresa!");
       break;
-
     case 3:
       dialogoNPC(
         'conejito',
@@ -154,7 +158,6 @@ function avanzarHistoria() {
       );
       if (pasos.length > 0) pasos.shift()();
       break;
-
     case 4:
       dialogoNPC(
         'florecita',
@@ -164,7 +167,6 @@ function avanzarHistoria() {
       );
       if (pasos.length > 0) pasos.shift()();
       break;
-
     case 5:
       dialogoNPC(
         'fresita',
@@ -174,7 +176,6 @@ function avanzarHistoria() {
       );
       if (pasos.length > 0) pasos.shift()();
       break;
-
     case 6:
       dialogoNPC(
         'gatito',
@@ -184,7 +185,6 @@ function avanzarHistoria() {
       );
       if (pasos.length > 0) pasos.shift()();
       break;
-
     case 7:
       dialogoNPC(
         'estrella',
@@ -194,7 +194,6 @@ function avanzarHistoria() {
       );
       if (pasos.length > 0) pasos.shift()();
       break;
-
     case 8:
       dialogoNPC(
         'carta',
@@ -204,7 +203,6 @@ function avanzarHistoria() {
       );
       if (pasos.length > 0) pasos.shift()();
       break;
-
     case 9:
       dialogoNPC(
         'caja_chocolates',
@@ -214,7 +212,6 @@ function avanzarHistoria() {
       );
       if (pasos.length > 0) pasos.shift()();
       break;
-
     case 10:
       dialogoNPC(
         'niña_fresita',
@@ -224,11 +221,9 @@ function avanzarHistoria() {
       );
       if (pasos.length > 0) pasos.shift()();
       break;
-
     case 11:
       escribirTexto(texto, "Ah… espera, hay algo más...");
       break;
-
     case 12:
       mostrarNPC('libro', 400, 700, 400);
       scene.tweens.add({
@@ -239,20 +234,16 @@ function avanzarHistoria() {
       });
       escribirTexto(texto, "Un librito apareció, y en él está escrito todo lo que te quiero decir.");
       break;
-
     case 13:
       escribirTexto(texto, "Querido Leo: Gracias por existir. Gracias por ser tú. Eres lo mejor que me ha pasado y siempre quiero cuidarte 💖.");
       break;
-
     case 14:
       texto.setFontSize(10);
       escribirTexto(texto, "🎁 Fin de la demo. Toca la pantalla para volver a empezar.");
       break;
-
     case 15:
       location.reload(); // reiniciar la historia
       break;
-
     default:
       break;
   }
