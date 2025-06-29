@@ -6,7 +6,12 @@ let scene;
 let esperandoClick = false;
 let pasos = [];
 
-document.fonts.load('10pt "Press Start 2P"').then(startGame);
+document.fonts.load('10pt "Press Start 2P"').then(() => {
+  console.log('Fuente cargada');
+  // Solo iniciar el juego cuando la fuente esté lista
+  // Nota: Ya inicias con botón, esta línea es por si quieres iniciar automáticamente
+  // startGame();
+});
 
 document.getElementById('start-button').addEventListener('click', () => {
   document.getElementById('main-menu').style.display = 'none';
@@ -65,16 +70,20 @@ function preload() {
 }
 
 function create() {
+  // Define variables para móvil o desktop aquí
+  const isMobile = window.innerWidth < 600;
+  const fontSize = isMobile ? '28px' : '18px';
+  const wrapWidth = isMobile ? 500 : 700;
+
   scene.add.image(400, 300, 'background');
   leo = scene.add.image(400, 400, 'leo-serio').setScale(0.7);
 
-
-texto = scene.add.text(50, 50, '', {
-  fontFamily: '"Press Start 2P"',
-  fontSize: isMobile ? '38px' : '18px',
-  color: '#6b4d9d',
-  wordWrap: { width: wrapWidth }
-}).setResolution(2);
+  texto = scene.add.text(50, 50, '', {
+    fontFamily: '"Press Start 2P"',
+    fontSize: fontSize,
+    color: '#6b4d9d',
+    wordWrap: { width: wrapWidth }
+  }).setResolution(2);
 
   scene.input.on('pointerdown', () => {
     if (!esperandoClick) return;
