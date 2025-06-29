@@ -80,7 +80,7 @@ function create() {
 
  const container = document.getElementById('game-container');
 const textoWidth = container.clientWidth - 40; // un margen de 20px a cada lado
-const fontSize = isMobile ? '32px' : '16px';
+const fontSize = isMobile ? '25px' : '16px';
 
 
   texto = scene.add.text(50, 50, '', {
