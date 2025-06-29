@@ -8,7 +8,7 @@ let pasos = [];
 
 let fuenteCargada = false;
 
-// Esperamos a que la fuente se cargue
+// Cargamos la fuente antes de iniciar el juego
 document.fonts.load('10pt "Press Start 2P"').then(() => {
   fuenteCargada = true;
   console.log('Fuente lista para usarse');
@@ -75,20 +75,20 @@ function preload() {
 }
 
 function create() {
+  const isMobile = window.innerWidth < 600;
+  const container = document.getElementById('game-container');
+  const textoWidth = container.clientWidth - 40;
+  const fontSize = isMobile ? '25px' : '16px';
+
   scene.add.image(400, 300, 'background');
   leo = scene.add.image(400, 400, 'leo-serio').setScale(0.7);
-
- const container = document.getElementById('game-container');
-const textoWidth = container.clientWidth - 40; // un margen de 20px a cada lado
-const fontSize = isMobile ? '25px' : '16px';
-
 
   texto = scene.add.text(50, 50, '', {
     fontFamily: '"Press Start 2P"',
     fontSize: fontSize,
     color: '#6b4d9d',
     wordWrap: { width: textoWidth },
-  lineSpacing: 8
+    lineSpacing: 8
   }).setResolution(1);
 
   scene.input.on('pointerdown', () => {
