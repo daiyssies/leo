@@ -2,12 +2,13 @@ let game;
 let currentStep = 0;
 let texto, leo, npc;
 let scene;
-
 let esperandoClick = false;
 let pasos = [];
-let fuenteCargada = false;
 
-// Esperar a que la fuente se cargue antes de iniciar el juego
+let fuenteCargada = false;
+let textoFontSize = null; // NUEVO: variable para guardar tamaño de fuente
+
+// Esperamos a que la fuente se cargue
 document.fonts.load('10pt "Press Start 2P"').then(() => {
   fuenteCargada = true;
   console.log('Fuente lista para usarse');
@@ -50,15 +51,14 @@ function preload() {
   scene = this;
   this.load.image('background', 'js/assets/fondo.png');
 
+  const npcs = [
+    'conejito', 'florecita', 'fresita', 'gatito',
+    'estrella', 'carta', 'caja_chocolates', 'niña_fresita', 'libro'
+  ];
+
   this.load.image('leo-serio', 'js/assets/character/leo_serio.png');
   this.load.image('leo-feli', 'js/assets/character/leo_feli.png');
   this.load.image('leo-sonriente', 'js/assets/character/leo_sonriente.png');
-
-  const npcs = [
-    'conejito', 'florecita', 'fresita',
-    'gatito', 'estrella', 'carta',
-    'caja_chocolates', 'niña_fresita', 'libro'
-  ];
 
   npcs.forEach(name => {
     this.load.image(name, `js/assets/${name}.png`);
@@ -66,13 +66,14 @@ function preload() {
 }
 
 function create() {
-  const isMobile = window.innerWidth < 600;
-  const container = document.getElementById('game-container');
-  const textoWidth = container.clientWidth - 40;
-  const fontSize = isMobile ? '25px' : '16px';
-
   scene.add.image(400, 300, 'background');
   leo = scene.add.image(400, 400, 'leo-serio').setScale(0.7);
+
+  const container = document.getElementById('game-container');
+  const textoWidth = container.clientWidth - 40;
+  const isMobile = window.innerWidth < 600;
+  const fontSize = isMobile ? '25px' : '16px';
+  textoFontSize = parseInt(fontSize); // Guarda el número como entero
 
   texto = scene.add.text(50, 50, '', {
     fontFamily: '"Press Start 2P"',
@@ -94,13 +95,11 @@ function create() {
     }
   });
 
-  // Esperamos un poquito para asegurarnos de que todo esté creado antes de avanzar
-  scene.time.delayedCall(100, () => {
-    avanzarHistoria();
-  });
+  avanzarHistoria();
 }
 
 function escribirTexto(textObject, message, speed = 30, callback) {
+  textObject.setFontSize(textoFontSize); // Aplica tamaño siempre
   textObject.setText('');
   let i = 0;
   let timer = scene.time.addEvent({
@@ -157,75 +156,35 @@ function avanzarHistoria() {
       escribirTexto(texto, "Te estaba buscando, ¡te tengo una sorpresa!");
       break;
     case 3:
-      dialogoNPC(
-        'conejito',
-        "¡Mira quién viene ahí...!",
-        "¡Hola Leo! Brinqué hasta aquí solo para decirte que eres muy amado 💕.",
-        "¡Eso fue muy tierno!"
-      );
+      dialogoNPC('conejito', "¡Mira quién viene ahí...!", "¡Hola Leo! Brinqué hasta aquí solo para decirte que eres muy amado 💕.", "¡Eso fue muy tierno!");
       if (pasos.length > 0) pasos.shift()();
       break;
     case 4:
-      dialogoNPC(
-        'florecita',
-        "¡Hola Leo! 🌼",
-        "Este pétalo es suave como el cariño que te tienen... y perfumadito como tú.",
-        "¡Qué bonito detalle!"
-      );
+      dialogoNPC('florecita', "¡Hola Leo! 🌼", "Este pétalo es suave como el cariño que te tienen... y perfumadito como tú.", "¡Qué bonito detalle!");
       if (pasos.length > 0) pasos.shift()();
       break;
     case 5:
-      dialogoNPC(
-        'fresita',
-        "¡Tú eres más dulce que yo!",
-        "Así que vine a darte un abrazo invisible 🍓✨.",
-        "Awww 🥺💗"
-      );
+      dialogoNPC('fresita', "¡Tú eres más dulce que yo!", "Así que vine a darte un abrazo invisible 🍓✨.", "Awww 🥺💗");
       if (pasos.length > 0) pasos.shift()();
       break;
     case 6:
-      dialogoNPC(
-        'gatito',
-        "Miau~",
-        "Incluso en los días grises, tú haces que todo se sienta más cálido 🐾.",
-        "¡Gracias, minino!"
-      );
+      dialogoNPC('gatito', "Miau~", "Incluso en los días grises, tú haces que todo se sienta más cálido 🐾.", "¡Gracias, minino!");
       if (pasos.length > 0) pasos.shift()();
       break;
     case 7:
-      dialogoNPC(
-        'estrella',
-        "Hola Leo ✨",
-        "Brillas más de lo que crees. Alguien te ve como su luz.",
-        "¡Qué palabras tan bonitas!"
-      );
+      dialogoNPC('estrella', "Hola Leo ✨", "Brillas más de lo que crees. Alguien te ve como su luz.", "¡Qué palabras tan bonitas!");
       if (pasos.length > 0) pasos.shift()();
       break;
     case 8:
-      dialogoNPC(
-        'carta',
-        "¡Toma esto!",
-        "Esta cartita guarda una promesa: la de nunca soltarte el corazón 💌.",
-        "¡Me la voy a guardar siempre!"
-      );
+      dialogoNPC('carta', "¡Toma esto!", "Esta cartita guarda una promesa: la de nunca soltarte el corazón 💌.", "¡Me la voy a guardar siempre!");
       if (pasos.length > 0) pasos.shift()();
       break;
     case 9:
-      dialogoNPC(
-        'caja_chocolates',
-        "¡Un regalito~!",
-        "No solo son dulces, llevan besitos escondidos... pero no le digas a nadie 🍫😘.",
-        "¡Jajaja, qué dulce!"
-      );
+      dialogoNPC('caja_chocolates', "¡Un regalito~!", "No solo son dulces, llevan besitos escondidos... pero no le digas a nadie 🍫😘.", "¡Jajaja, qué dulce!");
       if (pasos.length > 0) pasos.shift()();
       break;
     case 10:
-      dialogoNPC(
-        'niña_fresita',
-        "¡Hola Leo!",
-        "Alguien me dijo que eres su persona favorita en todo el universo 💗.",
-        "¡Eso me llena el corazón!"
-      );
+      dialogoNPC('niña_fresita', "¡Hola Leo!", "Alguien me dijo que eres su persona favorita en todo el universo 💗.", "¡Eso me llena el corazón!");
       if (pasos.length > 0) pasos.shift()();
       break;
     case 11:
@@ -233,23 +192,18 @@ function avanzarHistoria() {
       break;
     case 12:
       mostrarNPC('libro', 400, 700, 400);
-      scene.tweens.add({
-        targets: npc,
-        y: 350,
-        duration: 1000,
-        ease: 'Power2'
-      });
+      scene.tweens.add({ targets: npc, y: 350, duration: 1000, ease: 'Power2' });
       escribirTexto(texto, "Un librito apareció, y en él está escrito todo lo que te quiero decir.");
       break;
     case 13:
       escribirTexto(texto, "Querido Leo: Gracias por existir. Gracias por ser tú. Eres lo mejor que me ha pasado y siempre quiero cuidarte 💖.");
       break;
     case 14:
-      texto.setFontSize(10);
+      texto.setFontSize(textoFontSize); // Aplica el mismo tamaño también aquí
       escribirTexto(texto, "🎁 Fin de la demo. Toca la pantalla para volver a empezar.");
       break;
     case 15:
-      location.reload();
+      location.reload(); // reiniciar la historia
       break;
     default:
       break;
