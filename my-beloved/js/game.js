@@ -107,7 +107,7 @@ function mostrarTextoConFondo(message, speed = 30, callback = null, backgroundCo
   if (texto) texto.destroy();
 
   const coloresPorPersonaje = {
-    leo: 0x88ccff,
+    leo: 0xc3e3fd,
     conejito: 0xffd4d4,
     florecita: 0xffe8a3,
     fresita: 0xffb0c1,
@@ -115,7 +115,7 @@ function mostrarTextoConFondo(message, speed = 30, callback = null, backgroundCo
     estrella: 0xfde68a,
     carta: 0xd4c4ff,
     caja_chocolates: 0xd0b49f,
-    niña_fresita: 0xffaac9,
+    niña_fresita: 0xfdc3c3,
     libro: 0xd0f0c0
   };
 
