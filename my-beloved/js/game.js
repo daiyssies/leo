@@ -428,7 +428,6 @@ case 13:
 
     case 14:
       speakerActual = 'yopi';
-      alert('Fin de la demo, por favor ve a darle un besito a Alec ahora mismo !! ♡');
       escribirTexto(texto, "Toca la pantalla para volver a empezar.");
       break;
     case 15:
@@ -469,7 +468,7 @@ function esperarClickYMostrarOpciones() {
         texto: "No",
         accion: () => {
           speakerActual = 'yopi';
-          escribirTexto(texto, "Tal vez más tarde... pero el mensaje siempre estará ahí para ti 💌", 30, () => {
+          escribirTexto(texto, "Tal vez más tarde... pero el mensaje siempre estará ahí para ti", 30, () => {
             currentStep = 13;
             avanzarHistoria();
           });
