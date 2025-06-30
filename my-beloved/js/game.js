@@ -228,31 +228,35 @@ function avanzarHistoria() {
     // ... tus demás casos se mantienen igual con speakerActual actualizado antes de escribirTexto
 
     case 3:
-      dialogoNPC(
-        speakerActual = 'conejito';
-        "¡Mira quién viene ahí...!",
-        "¡Hola, Leo!",
-        "Brinqué hasta aquí...",
-        "Sólo para pasarte un mensaje importante",
-        "Es de tu novio Alec...",
-        "Me pidió que te recordara lo mucho que te ama",
-        "¡Eso fue muy tierno!"
-      );
-      if (pasos.length > 0) pasos.shift()();
-      break;
+      case 3:
+    dialogoNPC(
+      'conejito',
+      "¡Mira quién viene ahí...!",
+      "¡Hola, Leo!",
+      "Brinqué hasta aquí...",
+      "Sólo para pasarte un mensaje importante",
+      "Es de tu novio Alec...",
+      "Me pidió que te recordara lo mucho que te ama",
+      "¡Eso fue muy tierno!"
+    );
+    if (pasos.length > 0) pasos.shift()();
+    break;
+
     case 4:
-      dialogoNPC(
-        speakerActual='florecita';
-        "¡Hola, Leito!",
-        "Mis pétalos son tan suaves...",
-        "¡Como el amor que te tienen!",
-        "¡Qué bonito!"
-      );
-      if (pasos.length > 0) pasos.shift()();
-      break;
+      case 4:
+    dialogoNPC(
+      'florecita',
+      "¡Hola, Leito!",
+      "Mis pétalos son tan suaves...",
+      "¡Como el amor que te tienen!",
+      "¡Qué bonito!"
+    );
+    if (pasos.length > 0) pasos.shift()();
+    break;
+
     case 5:
       dialogoNPC(
-        speakerActual='fresita';
+        'fresita',
         "LEO",
         "¡Tú eres más dulce que yo!",
         "Y eso que soy una fresita...",
@@ -262,7 +266,7 @@ function avanzarHistoria() {
       break;
     case 6:
       dialogoNPC(
-        speakerActual='gatito';
+        'gatito',
         "Miau~",
         "Incluso en los días grises...",
         "Tú haces que todo se sienta más cálido",
@@ -272,7 +276,7 @@ function avanzarHistoria() {
       break;
     case 7:
       dialogoNPC(
-        speakerActual='estrella';
+        'estrella',
         "Hola, Leo",
         "Brillas más de lo que crees",
         "Alguien te ve como su luz",
@@ -282,7 +286,7 @@ function avanzarHistoria() {
       break;
     case 8:
       dialogoNPC(
-        speakerActual='carta';
+        'carta',
         "¡Toma esto!",
         "Esta cartita guarda una promesa",
         "...una promesa sembrada en papel,",
@@ -294,7 +298,7 @@ function avanzarHistoria() {
       break;
     case 9:
       dialogoNPC(
-        speakerActual='caja_chocolates';
+        'caja_chocolates',
         "¡Un regalito!",
         "No solo son dulces",
         "Llevan besitos escondidos...",
@@ -305,7 +309,7 @@ function avanzarHistoria() {
       break;
     case 10:
       dialogoNPC(
-        speakerActual='niña_fresita';
+        'niña_fresita'
         "¡Hola, lindo Leo!",
         "Alguien me dijo que...",
         "¡Eres su persona favorita en todo el mundo!",
