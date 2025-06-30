@@ -216,8 +216,9 @@ function avanzarHistoria() {
       dialogoNPC(
         'conejito',
         "¡Mira quién viene ahí...!",
-        "¡Hola, Leo! Brinqué hasta aquí solo para pasarte un mensaje importante.",
-        "Es de tu novio Alec",
+        "¡Hola, Leo!",
+        "Brinqué hasta aquí solo para pasarte un mensaje importante.",
+        "Es de tu novio Alec...",
         "Me pidió que te recordara lo mucho que te ama",
         "¡Eso fue muy tierno!"
       );
@@ -227,7 +228,8 @@ function avanzarHistoria() {
       dialogoNPC(
         'florecita',
         "¡Hola, Leito!",
-        "Mis pétalos son tan suaves como el amor que te tienen",
+        "Mis pétalos son tan suaves...",
+        "¡Como el amor que te tienen!",
         "¡Qué bonito!"
       );
       if (pasos.length > 0) pasos.shift()();
@@ -235,6 +237,7 @@ function avanzarHistoria() {
     case 5:
       dialogoNPC(
         'fresita',
+        "LEO",
         "¡Tú eres más dulce que yo!",
         "Y eso que soy una fresita...",
         "Awww"
@@ -255,7 +258,8 @@ function avanzarHistoria() {
       dialogoNPC(
         'estrella',
         "Hola, Leo",
-        "Brillas más de lo que crees. Alguien te ve como su luz.",
+        "Brillas más de lo que crees",
+        "Alguien te ve como su luz.",
         "¡Qué palabras tan bonitas!"
       );
       if (pasos.length > 0) pasos.shift()();
@@ -268,7 +272,7 @@ function avanzarHistoria() {
         "...una promesita sembrada en papel,",
         "que florece cada vez que me piensas",
         "¡Puedes reclamarla al terminar!",
-        "¡Me la voy a guardar siempre!"
+        "¡Sin duda lo haré!"
       );
       if (pasos.length > 0) pasos.shift()();
       break;
@@ -276,7 +280,8 @@ function avanzarHistoria() {
       dialogoNPC(
         'caja_chocolates',
         "¡Un regalito!",
-        "No solo son dulces, llevan besitos escondidos...",
+        "No solo son dulces",
+        "Llevan besitos escondidos...",
         "Pero no le digas a nadie :]",
         "¡Jajaja, qué dulce!"
       );
@@ -287,7 +292,7 @@ function avanzarHistoria() {
         'niña_fresita',
         "¡Hola, lindo Leo!",
         "Alguien me dijo que...",
-        "¡Que eres su persona favorita en todo el universo!",
+        "¡Eres su persona favorita en todo el mundo!",
         "Me pregunto quién será..."
       );
       if (pasos.length > 0) pasos.shift()();
