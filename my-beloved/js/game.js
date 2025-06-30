@@ -116,7 +116,8 @@ function mostrarTextoConFondo(message, speed = 30, callback = null, backgroundCo
     carta: 0xd4c4ff,
     caja_chocolates: 0xd0b49f,
     niña_fresita: 0xfdc3c3,
-    libro: 0xd0f0c0
+    libro: 0xd0f0c0,
+    yopi: 0xfdf4ff
   };
 
   const color = backgroundColor !== null
@@ -213,24 +214,30 @@ function avanzarHistoria() {
 
   switch (currentStep) {
     case 1:
-      speakerActual = 'leo';
+      speakerActual = 'yopi';
       escribirTexto(texto, "¡Leito! Ahí estás...");
       break;
     case 2:
-      speakerActual = 'leo';
-      leo.setTexture('leo-feli');
-      escribirTexto(texto, "Te estaba buscando");
-      pasos.push(() => {
-        speakerActual = 'leo';
-        escribirTexto(texto, "¡Te tengo una sorpresa!");
+  speakerActual = 'yopi';
+  leo.setTexture('leo-feli');
+  escribirTexto(texto, "Te estaba buscando");
+  pasos.push(() => {
+    speakerActual = 'yopi';
+    escribirTexto(texto, "¡Te tengo una sorpresa!", 30, () => {
+      speakerActual = 'yopi';
+      escribirTexto(texto, "¡Mira quién viene ahí...!", 30, () => {
+        // Al terminar esta línea del narrador, avanza al siguiente case
+        if (pasos.length > 0) pasos.shift()(); // opcional si quieres más pasos
+        currentStep++; // avanzar al case 3
+        avanzarHistoria(); // llama manualmente al siguiente paso
       });
-      break;
-    // ... tus demás casos se mantienen igual con speakerActual actualizado antes de escribirTexto
+    });
+  });
+  break;
 
-    case 3:
+case 3:
   dialogoNPC(
     'conejito',
-    "¡Mira quién viene ahí...!",
     "¡Hola, Leo!",
     "Brinqué hasta aquí...",
     "Sólo para pasarte un mensaje importante",
@@ -263,31 +270,40 @@ function avanzarHistoria() {
         'fresita',
         "LEO",
         "¡Tú eres más dulce que yo!",
-        "Y eso que soy una fresita...",
-        "Awww"
+        "Y eso que soy una fresita..."
       );
-      if (pasos.length > 0) pasos.shift()();
-      break;
+      pasos.push(() => {
+      speakerActual = 'leo';
+      escribirTexto(texto, "Awww");
+    });
+    if (pasos.length > 0) pasos.shift()();
+    break;
     case 6:
       dialogoNPC(
         'gatito',
         "Miau~",
         "Incluso en los días grises...",
-        "Tú haces que todo se sienta más cálido",
-        "¡Gracias, minino!"
+        "Tú haces que todo se sienta más cálido"
       );
-      if (pasos.length > 0) pasos.shift()();
-      break;
+      pasos.push(() => {
+      speakerActual = 'leo';
+      escribirTexto(texto, "¡Gracias, minino!");
+    });
+    if (pasos.length > 0) pasos.shift()();
+    break;
     case 7:
       dialogoNPC(
         'estrella',
         "Hola, Leo",
         "Brillas más de lo que crees",
-        "Alguien te ve como su luz",
-        "¡Qué palabras tan bonitas!"
+        "Alguien te ve como su luz"
       );
-      if (pasos.length > 0) pasos.shift()();
-      break;
+      pasos.push(() => {
+      speakerActual = 'leo';
+      escribirTexto(texto, "¡Qué palabras tan bonitas!");
+    });
+    if (pasos.length > 0) pasos.shift()();
+    break;
     case 8:
       dialogoNPC(
         'carta',
@@ -295,33 +311,43 @@ function avanzarHistoria() {
         "Esta cartita guarda una promesa",
         "...una promesa sembrada en papel,",
         "que florece cada vez que me piensas",
-        "¡Puedes reclamarla al terminar!",
-        "¡Sin duda lo haré!"
+        "¡Puedes reclamarla al terminar!"
       );
-      if (pasos.length > 0) pasos.shift()();
-      break;
+      pasos.push(() => {
+      speakerActual = 'leo';
+      escribirTexto(texto, "¡Sin duda lo haré!");
+    });
+    if (pasos.length > 0) pasos.shift()();
+    break;
     case 9:
       dialogoNPC(
         'caja_chocolates',
         "¡Un regalito!",
         "No solo son dulces",
         "Llevan besitos escondidos...",
-        "Pero no le digas a nadie :]",
-        "¡Jajaja, qué dulce!"
+        "Pero no le digas a nadie :]"
       );
-      if (pasos.length > 0) pasos.shift()();
-      break;
+      pasos.push(() => {
+      speakerActual = 'leo';
+      escribirTexto(texto, "¡Jajaja, qué dulce!");
+    });
+    if (pasos.length > 0) pasos.shift()();
+    break;
     case 10:
       dialogoNPC(
         'niña_fresita',
         "¡Hola, lindo Leo!",
         "Alguien me dijo que...",
-        "¡Eres su persona favorita en todo el mundo!",
-        "Me pregunto quién será..."
+        "¡Eres su persona favorita en todo el mundo!"
       );
-      if (pasos.length > 0) pasos.shift()();
-      break;
+      pasos.push(() => {
+      speakerActual = 'leo';
+      escribirTexto(texto, "Me pregunto quién será...");
+    });
+    if (pasos.length > 0) pasos.shift()();
+    break;
     case 11:
+      speakerActual = 'yopi';
       escribirTexto(texto, "Ah… espera, hay algo más...");
       break;
     case 12:
@@ -332,12 +358,15 @@ function avanzarHistoria() {
         duration: 1000,
         ease: 'Power2'
       });
+      speakerActual = 'yopi';
       escribirTexto(texto, "Un librito apareció, y en él está escrito todo lo que te quiero decir.");
       break;
     case 13:
+      speakerActual = 'yopi';
       escribirTexto(texto, "Querido Leo: Gracias por existir. Gracias por ser tú. Eres lo mejor que me ha pasado y siempre quiero cuidarte.");
       break;
     case 14:
+      speakerActual = 'yopi';
       alert('Fin de la demo, por favor ve a darle un besito a Alec ahora mismo !! ♡');
       escribirTexto(texto, "Toca la pantalla para volver a empezar.");
       break;
