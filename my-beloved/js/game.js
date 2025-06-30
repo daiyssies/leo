@@ -179,21 +179,26 @@ function mostrarNPC(key, x = null, y = null, finalX = null) {
   });
 }
 
-function dialogoNPC(key, saludo, mensaje, reaccion) {
+function dialogoNPC(key, ...lineas) {
   pasos.push(() => {
     if (npc) npc.destroy();
     leo.setTexture('leo-serio');
     mostrarNPC(key);
-    escribirTexto(texto, saludo);
+    escribirTexto(texto, lineas[0]);
   });
-  pasos.push(() => {
-    escribirTexto(texto, mensaje);
-  });
+
+  for (let i = 1; i < lineas.length - 1; i++) {
+    pasos.push(() => {
+      escribirTexto(texto, lineas[i]);
+    });
+  }
+
   pasos.push(() => {
     leo.setTexture('leo-sonriente');
-    escribirTexto(texto, reaccion);
+    escribirTexto(texto, lineas[lineas.length - 1]);
   });
 }
+
 
 function avanzarHistoria() {
   currentStep++;
