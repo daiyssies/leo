@@ -307,7 +307,7 @@ function avanzarHistoria() {
       break;
     case 10:
       dialogoNPC(
-        'niña_fresita'
+        'niña_fresita',
         "¡Hola, lindo Leo!",
         "Alguien me dijo que...",
         "¡Eres su persona favorita en todo el mundo!",
