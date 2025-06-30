@@ -211,7 +211,9 @@ function avanzarHistoria() {
       dialogoNPC(
         'conejito',
         "¡Mira quién viene ahí...!",
-        "¡Hola Leo! Brinqué hasta aquí solo para pasarte un mensaje importante.",
+        "¡Hola, Leo! Brinqué hasta aquí solo para pasarte un mensaje importante.",
+        "Es de tu novio Alec",
+        "Me pidió que te recordara lo mucho que te ama",
         "¡Eso fue muy tierno!"
       );
       if (pasos.length > 0) pasos.shift()();
@@ -219,9 +221,9 @@ function avanzarHistoria() {
     case 4:
       dialogoNPC(
         'florecita',
-        "¡Hola Leo!",
-        "Este pétalo es suave como el cariño que te tienen... y perfumadito como tú.",
-        "¡Qué bonito detalle!"
+        "¡Hola, Leito!",
+        "Mis pétalos son tan suaves como el amor que te tienen",
+        "¡Qué bonito!"
       );
       if (pasos.length > 0) pasos.shift()();
       break;
@@ -229,7 +231,7 @@ function avanzarHistoria() {
       dialogoNPC(
         'fresita',
         "¡Tú eres más dulce que yo!",
-        "Así que vine a darte un abrazo invisible.",
+        "Y eso que soy una fresita...",
         "Awww"
       );
       if (pasos.length > 0) pasos.shift()();
@@ -238,7 +240,8 @@ function avanzarHistoria() {
       dialogoNPC(
         'gatito',
         "Miau~",
-        "Incluso en los días grises, tú haces que todo se sienta más cálido.",
+        "Incluso en los días grises...",
+        "Tú haces que todo se sienta más cálido",
         "¡Gracias, minino!"
       );
       if (pasos.length > 0) pasos.shift()();
@@ -246,7 +249,7 @@ function avanzarHistoria() {
     case 7:
       dialogoNPC(
         'estrella',
-        "Hola Leo",
+        "Hola, Leo",
         "Brillas más de lo que crees. Alguien te ve como su luz.",
         "¡Qué palabras tan bonitas!"
       );
@@ -256,7 +259,10 @@ function avanzarHistoria() {
       dialogoNPC(
         'carta',
         "¡Toma esto!",
-        "Esta cartita guarda una promesa: la de nunca soltarte el corazón.",
+        "Esta cartita guarda una promesa",
+        "...una promesita sembrada en papel,",
+        "que florece cada vez que me piensas",
+        "¡Puedes reclamarla al terminar!"
         "¡Me la voy a guardar siempre!"
       );
       if (pasos.length > 0) pasos.shift()();
@@ -264,8 +270,9 @@ function avanzarHistoria() {
     case 9:
       dialogoNPC(
         'caja_chocolates',
-        "¡Un regalito~!",
-        "No solo son dulces, llevan besitos escondidos... pero no le digas a nadie.",
+        "¡Un regalito!",
+        "No solo son dulces, llevan besitos escondidos...",
+        "Pero no le digas a nadie :]",
         "¡Jajaja, qué dulce!"
       );
       if (pasos.length > 0) pasos.shift()();
@@ -273,9 +280,10 @@ function avanzarHistoria() {
     case 10:
       dialogoNPC(
         'niña_fresita',
-        "¡Hola Leo!",
-        "Alguien me dijo que eres su persona favorita en todo el universo.",
-        "¡Eso me llena el corazón!"
+        "¡Hola, lindo Leo!",
+        "Alguien me dijo que...",
+        "¡Que eres su persona favorita en todo el universo!",
+        "Me pregunto quién será..."
       );
       if (pasos.length > 0) pasos.shift()();
       break;
