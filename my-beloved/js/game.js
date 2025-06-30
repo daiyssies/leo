@@ -228,16 +228,19 @@ function avanzarHistoria() {
     // ... tus demás casos se mantienen igual con speakerActual actualizado antes de escribirTexto
 
     case 3:
-    dialogoNPC(
-      'conejito',
-      "¡Mira quién viene ahí...!",
-      "¡Hola, Leo!",
-      "Brinqué hasta aquí...",
-      "Sólo para pasarte un mensaje importante",
-      "Es de tu novio Alec...",
-      "Me pidió que te recordara lo mucho que te ama",
-      "¡Eso fue muy tierno!"
-    );
+  dialogoNPC(
+    'conejito',
+    "¡Mira quién viene ahí...!",
+    "¡Hola, Leo!",
+    "Brinqué hasta aquí...",
+    "Sólo para pasarte un mensaje importante",
+    "Es de tu novio Alec...",
+    "Me pidió que te recordara lo mucho que te ama"
+  );
+    pasos.push(() => {
+      speakerActual = 'leo';
+      escribirTexto(texto, "¡Eso fue muy tierno!");
+    });
     if (pasos.length > 0) pasos.shift()();
     break;
 
@@ -246,9 +249,12 @@ function avanzarHistoria() {
       'florecita',
       "¡Hola, Leito!",
       "Mis pétalos son tan suaves...",
-      "¡Como el amor que te tienen!",
-      "¡Qué bonito!"
+      "¡Como el amor que te tienen!"
     );
+    pasos.push(() => {
+      speakerActual = 'leo';
+      escribirTexto(texto, "¡Qué bonito!");
+    });
     if (pasos.length > 0) pasos.shift()();
     break;
 
