@@ -314,6 +314,7 @@ function avanzarHistoria() {
       escribirTexto(texto, "Querido Leo: Gracias por existir. Gracias por ser tú. Eres lo mejor que me ha pasado y siempre quiero cuidarte.");
       break;
     case 14:
+    alert('Fin de la demo, por favor ve a darle un besito a Alec...');
       escribirTexto(texto, "Fin de la demo. Toca la pantalla para volver a empezar.");
       break;
     case 15:
