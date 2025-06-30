@@ -401,7 +401,7 @@ case 3:
       break;
       
     case 12:
-  if (leo) leo.setVisible(false); // Ocultar a Leo antes
+  if (leo) leo.setVisible(false); // Oculta a Leo antes
 
   mostrarNPC('libro', scene.scale.width / 2, scene.scale.height + 100, scene.scale.width / 2);
 
@@ -412,44 +412,15 @@ case 3:
     ease: 'Power2',
     onComplete: () => {
       speakerActual = 'yopi';
+      // Mostramos el texto narrativo primero
       escribirTexto(texto, "Un librito apareció, y en él está escrito todo lo que te quiero decir.", 30, () => {
-        mostrarOpciones("¿Quieres abrir el librito?", [
-          {
-            texto: "Sí",
-            accion: () => {
-              // Mostrar mensaje del libro directamente SIN usar avanzarHistoria()
-              if (npc) {
-                scene.tweens.add({
-                  targets: npc,
-                  alpha: 0,
-                  duration: 500,
-                  onComplete: () => {
-                    npc.destroy();
-                    speakerActual = 'yopi';
-                    escribirTexto(texto, "Querido Leo: Gracias por existir. Gracias por ser tú. Eres lo mejor que me ha pasado y siempre quiero cuidarte.", 30, () => {
-                      currentStep = 13; // Saltamos al case 14 después
-                      avanzarHistoria();
-                    });
-                  }
-                });
-              }
-            }
-          },
-          {
-            texto: "No",
-            accion: () => {
-              speakerActual = 'yopi';
-              escribirTexto(texto, "Tal vez más tarde... pero el mensaje siempre estará ahí para ti 💌", 30, () => {
-                currentStep = 13; // Saltamos al case 14 directamente
-                avanzarHistoria();
-              });
-            }
-          }
-        ]);
+        // Cuando el jugador toca la pantalla después del texto, mostramos las opciones
+        esperarClickYMostrarOpciones();
       });
     }
   });
   break;
+
 
 
 case 13:
@@ -467,3 +438,44 @@ case 13:
       break;
   }
 }
+
+function esperarClickYMostrarOpciones() {
+  esperandoClick = true;
+  scene.input.once('pointerdown', () => {
+    esperandoClick = false;
+
+    mostrarOpciones("¿Quieres abrir el librito?", [
+      {
+        texto: "Sí",
+        accion: () => {
+          if (npc) {
+            scene.tweens.add({
+              targets: npc,
+              alpha: 0,
+              duration: 500,
+              onComplete: () => {
+                npc.destroy();
+                speakerActual = 'yopi';
+                escribirTexto(texto, "Querido Leo: Gracias por existir. Gracias por ser tú. Eres lo mejor que me ha pasado y siempre quiero cuidarte.", 30, () => {
+                  currentStep = 13;
+                  avanzarHistoria();
+                });
+              }
+            });
+          }
+        }
+      },
+      {
+        texto: "No",
+        accion: () => {
+          speakerActual = 'yopi';
+          escribirTexto(texto, "Tal vez más tarde... pero el mensaje siempre estará ahí para ti 💌", 30, () => {
+            currentStep = 13;
+            avanzarHistoria();
+          });
+        }
+      }
+    ]);
+  });
+}
+
