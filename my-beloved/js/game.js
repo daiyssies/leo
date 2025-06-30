@@ -267,13 +267,14 @@ function avanzarHistoria() {
       escribirTexto(texto, "¡Leito! Ahí estás...");
       break;
     case 2:
-  speakerActual = 'yopi';
-  leo.setTexture('leo-feli');
-  escribirTexto(texto, "Te estaba buscando");
-    escribirTexto(texto, "¡Te tengo una sorpresa!");
-      escribirTexto(texto, "¡Mira quién viene ahí...!");
-      
-  break;
+      speakerActual = 'yopi';
+      leo.setTexture('leo-feli');
+      escribirTexto(texto, "Te estaba buscando");
+      pasos.push(() => {
+        speakerActual = 'yopi';
+        escribirTexto(texto, "¡Te tengo una sorpresa!");
+      });
+      break;
 
 
 case 3:
