@@ -269,20 +269,16 @@ function avanzarHistoria() {
     case 2:
   speakerActual = 'yopi';
   leo.setTexture('leo-feli');
-  escribirTexto(texto, "Te estaba buscando");
-  pasos.push(() => {
-    speakerActual = 'yopi';
+  escribirTexto(texto, "Te estaba buscando", 30, () => {
     escribirTexto(texto, "¡Te tengo una sorpresa!", 30, () => {
-      speakerActual = 'yopi';
       escribirTexto(texto, "¡Mira quién viene ahí...!", 30, () => {
-        // Al terminar esta línea del narrador, avanza al siguiente case
-        if (pasos.length > 0) pasos.shift()(); // opcional si quieres más pasos
         currentStep++; // avanzar al case 3
-        avanzarHistoria(); // llama manualmente al siguiente paso
+        avanzarHistoria();
       });
     });
   });
   break;
+
 
 case 3:
   dialogoNPC(
