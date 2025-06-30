@@ -226,8 +226,7 @@ function avanzarHistoria() {
       });
       break;
     // ... tus demás casos se mantienen igual con speakerActual actualizado antes de escribirTexto
-  }
-}
+
     case 3:
       dialogoNPC(
         speakerActual = 'conejito';
