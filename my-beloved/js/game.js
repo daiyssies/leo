@@ -242,7 +242,6 @@ function avanzarHistoria() {
     break;
 
     case 4:
-      case 4:
     dialogoNPC(
       'florecita',
       "¡Hola, Leito!",
