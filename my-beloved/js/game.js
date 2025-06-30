@@ -171,6 +171,50 @@ function mostrarTextoConFondo(message, speed = 30, callback = null, backgroundCo
   });
 }
 
+function mostrarOpciones(textoPregunta, opciones) {
+  const ancho = scene.scale.width;
+  const alto = scene.scale.height;
+
+  const fondo = scene.add.rectangle(ancho / 2, alto / 2 + 100, 300, 120, 0x000000, 0.7).setOrigin(0.5).setStrokeStyle(2, 0xffffff).setRadius(12);
+
+  const texto = scene.add.text(ancho / 2, alto / 2 + 60, textoPregunta, {
+    fontFamily: '"Press Start 2P"',
+    fontSize: 12,
+    color: '#ffffff',
+    align: 'center',
+    wordWrap: { width: 280 },
+    stroke: '#000000',
+    strokeThickness: 2
+  }).setOrigin(0.5).setResolution(4);
+
+  const botones = [];
+
+  opciones.forEach((opcion, index) => {
+    const btn = scene.add.text(ancho / 2 + (index === 0 ? -60 : 60), alto / 2 + 120, opcion.texto, {
+      fontFamily: '"Press Start 2P"',
+      fontSize: 10,
+      backgroundColor: '#ffffff',
+      color: '#000000',
+      padding: { left: 6, right: 6, top: 4, bottom: 4 },
+      stroke: '#000000',
+      strokeThickness: 2
+    }).setOrigin(0.5).setInteractive({ useHandCursor: true }).setResolution(4);
+
+    btn.on('pointerdown', () => {
+      // Elimina los elementos de la opción
+      fondo.destroy();
+      texto.destroy();
+      botones.forEach(b => b.destroy());
+
+      // Ejecuta la acción correspondiente
+      opcion.accion();
+    });
+
+    botones.push(btn);
+  });
+}
+
+
 function escribirTexto(textObject, message, speed = 30, callback, backgroundColor = null) {
   mostrarTextoConFondo(message, speed, callback, backgroundColor);
 }
@@ -350,21 +394,47 @@ case 3:
       speakerActual = 'yopi';
       escribirTexto(texto, "Ah… espera, hay algo más...");
       break;
+      
     case 12:
-      mostrarNPC('libro', scene.scale.width / 2, scene.scale.height + 100, scene.scale.width / 2);
-      scene.tweens.add({
-        targets: npc,
-        y: scene.scale.height / 2,
-        duration: 1000,
-        ease: 'Power2'
+  mostrarNPC('libro', scene.scale.width / 2, scene.scale.height + 100, scene.scale.width / 2);
+  scene.tweens.add({
+    targets: npc,
+    y: scene.scale.height / 2,
+    duration: 1000,
+    ease: 'Power2',
+    onComplete: () => {
+      if (leo) leo.setVisible(false);
+      speakerActual = 'yopi';
+      escribirTexto(texto, "Un librito apareció, y en él está escrito todo lo que te quiero decir.", 30, () => {
+        mostrarOpciones("¿Quieres abrir el librito?", [
+          {
+            texto: "Sí",
+            accion: () => {
+              currentStep++; // pasa al case 13
+              avanzarHistoria();
+            }
+          },
+          {
+            texto: "No",
+            accion: () => {
+              speakerActual = 'yopi';
+              escribirTexto(texto, "Tal vez más tarde... pero el mensaje siempre estará ahí para ti");
+            }
+          }
+        ]);
       });
-      speakerActual = 'yopi';
-      escribirTexto(texto, "Un librito apareció, y en él está escrito todo lo que te quiero decir.");
-      break;
-    case 13:
-      speakerActual = 'yopi';
-      escribirTexto(texto, "Querido Leo: Gracias por existir. Gracias por ser tú. Eres lo mejor que me ha pasado y siempre quiero cuidarte.");
-      break;
+    }
+  });
+  break;
+
+
+case 13:
+  if (npc) npc.destroy(); // Elimina el librito
+  speakerActual = 'yopi';
+  escribirTexto(texto, "Querido Leo: Gracias por existir. Gracias por ser tú. Eres lo mejor que me ha pasado y siempre quiero cuidarte.");
+  break;
+
+
     case 14:
       speakerActual = 'yopi';
       alert('Fin de la demo, por favor ve a darle un besito a Alec ahora mismo !! ♡');
