@@ -228,7 +228,6 @@ function avanzarHistoria() {
     // ... tus demás casos se mantienen igual con speakerActual actualizado antes de escribirTexto
 
     case 3:
-      case 3:
     dialogoNPC(
       'conejito',
       "¡Mira quién viene ahí...!",
