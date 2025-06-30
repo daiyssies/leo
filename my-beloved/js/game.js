@@ -417,15 +417,32 @@ case 3:
           {
             texto: "Sí",
             accion: () => {
-              currentStep++; // Avanza al case 13
-              avanzarHistoria();
+              // Mostrar mensaje del libro directamente SIN usar avanzarHistoria()
+              if (npc) {
+                scene.tweens.add({
+                  targets: npc,
+                  alpha: 0,
+                  duration: 500,
+                  onComplete: () => {
+                    npc.destroy();
+                    speakerActual = 'yopi';
+                    escribirTexto(texto, "Querido Leo: Gracias por existir. Gracias por ser tú. Eres lo mejor que me ha pasado y siempre quiero cuidarte.", 30, () => {
+                      currentStep = 13; // Saltamos al case 14 después
+                      avanzarHistoria();
+                    });
+                  }
+                });
+              }
             }
           },
           {
             texto: "No",
             accion: () => {
               speakerActual = 'yopi';
-              escribirTexto(texto, "Tal vez más tarde... pero el mensaje siempre estará ahí para ti 💌");
+              escribirTexto(texto, "Tal vez más tarde... pero el mensaje siempre estará ahí para ti 💌", 30, () => {
+                currentStep = 13; // Saltamos al case 14 directamente
+                avanzarHistoria();
+              });
             }
           }
         ]);
@@ -434,22 +451,9 @@ case 3:
   });
   break;
 
+
 case 13:
-  if (npc) {
-    scene.tweens.add({
-      targets: npc,
-      alpha: 0,
-      duration: 500,
-      onComplete: () => {
-        npc.destroy();
-      }
-    });
-  }
-  speakerActual = 'yopi';
-  escribirTexto(texto, "Querido Leo: Gracias por existir. Gracias por ser tú. Eres lo mejor que me ha pasado y siempre quiero cuidarte.");
   break;
-
-
 
     case 14:
       speakerActual = 'yopi';
