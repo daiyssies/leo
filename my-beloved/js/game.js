@@ -5,8 +5,8 @@ let scene;
 
 let esperandoClick = false;
 let pasos = [];
-
 let fuenteCargada = false;
+let speakerActual = null; // Nuevo: para controlar el hablante
 
 // Cargar fuente
 document.fonts.load('10pt "Press Start 2P"').then(() => {
@@ -84,9 +84,6 @@ function create() {
   const leoY = scene.scale.height - 190;
   leo = scene.add.image(leoX, leoY, 'leo-serio').setScale(0.7);
 
-  const isMobile = window.innerWidth < 600;
-  const textoWidth = scene.scale.width - 40;
-
   scene.input.on('pointerdown', () => {
     if (!esperandoClick) return;
     esperandoClick = false;
@@ -102,13 +99,29 @@ function create() {
   avanzarHistoria();
 }
 
-function mostrarTextoConFondo(message, speed = 30, callback = null) {
+function mostrarTextoConFondo(message, speed = 30, callback = null, backgroundColor = null) {
   const padding = 20;
   const boxWidth = scene.scale.width - 40;
-  const isMobile = scene.scale.width < 800;
 
   if (scene.textoFondo) scene.textoFondo.destroy();
   if (texto) texto.destroy();
+
+  const coloresPorPersonaje = {
+    leo: 0x88ccff,
+    conejito: 0xffd4d4,
+    florecita: 0xffe8a3,
+    fresita: 0xffb0c1,
+    gatito: 0xc2d4ff,
+    estrella: 0xfde68a,
+    carta: 0xd4c4ff,
+    caja_chocolates: 0xd0b49f,
+    niña_fresita: 0xffaac9,
+    libro: 0xd0f0c0
+  };
+
+  const color = backgroundColor !== null
+    ? backgroundColor
+    : coloresPorPersonaje[speakerActual] || 0x8cb1dc;
 
   texto = scene.add.text(0, 0, '', {
     fontFamily: '"Press Start 2P"',
@@ -125,12 +138,10 @@ function mostrarTextoConFondo(message, speed = 30, callback = null) {
   const textWidth = boxWidth;
 
   const fondo = scene.add.graphics();
-  fondo.fillStyle(0x8cb1dc, 1);
-  fondo.fillRoundedRect(0, 0, textWidth, textHeight + padding * 2, 10); // ← el 20 es el radio de la esquina
-  fondo.lineStyle(4, 0xffffff, 1); // grosor, color, opacidad
-fondo.strokeRoundedRect(0, 0, textWidth, textHeight + padding * 2, 10);
-
-
+  fondo.fillStyle(color, 1);
+  fondo.fillRoundedRect(0, 0, textWidth, textHeight + padding * 2, 10);
+  fondo.lineStyle(4, 0xffffff, 1);
+  fondo.strokeRoundedRect(0, 0, textWidth, textHeight + padding * 2, 10);
   fondo.setScrollFactor(0);
 
   const contenedor = scene.add.container(20, 30, [fondo, texto]);
@@ -159,13 +170,12 @@ fondo.strokeRoundedRect(0, 0, textWidth, textHeight + padding * 2, 10);
   });
 }
 
-function escribirTexto(textObject, message, speed = 30, callback) {
-  mostrarTextoConFondo(message, speed, callback);
+function escribirTexto(textObject, message, speed = 30, callback, backgroundColor = null) {
+  mostrarTextoConFondo(message, speed, callback, backgroundColor);
 }
 
 function mostrarNPC(key, x = null, y = null, finalX = null) {
   if (npc) npc.destroy();
-
   const defaultX = leo.x + 170;
   const defaultY = leo.y + 65;
   const targetX = finalX !== null ? finalX : defaultX;
@@ -180,41 +190,47 @@ function mostrarNPC(key, x = null, y = null, finalX = null) {
 }
 
 function dialogoNPC(key, ...lineas) {
+  speakerActual = key;
   pasos.push(() => {
     if (npc) npc.destroy();
     leo.setTexture('leo-serio');
     mostrarNPC(key);
     escribirTexto(texto, lineas[0]);
   });
-
   for (let i = 1; i < lineas.length - 1; i++) {
     pasos.push(() => {
       escribirTexto(texto, lineas[i]);
     });
   }
-
   pasos.push(() => {
     leo.setTexture('leo-sonriente');
     escribirTexto(texto, lineas[lineas.length - 1]);
   });
 }
 
-
 function avanzarHistoria() {
   currentStep++;
 
   switch (currentStep) {
     case 1:
+      speakerActual = 'leo';
       escribirTexto(texto, "¡Leito! Ahí estás...");
       break;
     case 2:
+      speakerActual = 'leo';
       leo.setTexture('leo-feli');
       escribirTexto(texto, "Te estaba buscando");
-      pasos.push(() => escribirTexto(texto, "¡Te tengo una sorpresa!"));
+      pasos.push(() => {
+        speakerActual = 'leo';
+        escribirTexto(texto, "¡Te tengo una sorpresa!");
+      });
       break;
+    // ... tus demás casos se mantienen igual con speakerActual actualizado antes de escribirTexto
+  }
+}
     case 3:
       dialogoNPC(
-        'conejito',
+        speakerActual = 'conejito';
         "¡Mira quién viene ahí...!",
         "¡Hola, Leo!",
         "Brinqué hasta aquí...",
@@ -227,7 +243,7 @@ function avanzarHistoria() {
       break;
     case 4:
       dialogoNPC(
-        'florecita',
+        speakerActual='florecita';
         "¡Hola, Leito!",
         "Mis pétalos son tan suaves...",
         "¡Como el amor que te tienen!",
@@ -237,7 +253,7 @@ function avanzarHistoria() {
       break;
     case 5:
       dialogoNPC(
-        'fresita',
+        speakerActual='fresita';
         "LEO",
         "¡Tú eres más dulce que yo!",
         "Y eso que soy una fresita...",
@@ -247,7 +263,7 @@ function avanzarHistoria() {
       break;
     case 6:
       dialogoNPC(
-        'gatito',
+        speakerActual='gatito';
         "Miau~",
         "Incluso en los días grises...",
         "Tú haces que todo se sienta más cálido",
@@ -257,7 +273,7 @@ function avanzarHistoria() {
       break;
     case 7:
       dialogoNPC(
-        'estrella',
+        speakerActual='estrella';
         "Hola, Leo",
         "Brillas más de lo que crees",
         "Alguien te ve como su luz",
@@ -267,7 +283,7 @@ function avanzarHistoria() {
       break;
     case 8:
       dialogoNPC(
-        'carta',
+        speakerActual='carta';
         "¡Toma esto!",
         "Esta cartita guarda una promesa",
         "...una promesa sembrada en papel,",
@@ -279,7 +295,7 @@ function avanzarHistoria() {
       break;
     case 9:
       dialogoNPC(
-        'caja_chocolates',
+        speakerActual='caja_chocolates';
         "¡Un regalito!",
         "No solo son dulces",
         "Llevan besitos escondidos...",
@@ -290,7 +306,7 @@ function avanzarHistoria() {
       break;
     case 10:
       dialogoNPC(
-        'niña_fresita',
+        speakerActual='niña_fresita';
         "¡Hola, lindo Leo!",
         "Alguien me dijo que...",
         "¡Eres su persona favorita en todo el mundo!",
