@@ -269,14 +269,10 @@ function avanzarHistoria() {
     case 2:
   speakerActual = 'yopi';
   leo.setTexture('leo-feli');
-  escribirTexto(texto, "Te estaba buscando", 30, () => {
-    escribirTexto(texto, "¡Te tengo una sorpresa!", 30, () => {
-      escribirTexto(texto, "¡Mira quién viene ahí...!", 30, () => {
-        currentStep++; // avanzar al case 3
-        avanzarHistoria();
-      });
-    });
-  });
+  escribirTexto(texto, "Te estaba buscando");
+    escribirTexto(texto, "¡Te tengo una sorpresa!");
+      escribirTexto(texto, "¡Mira quién viene ahí...!");
+      
   break;
 
 
