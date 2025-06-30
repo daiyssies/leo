@@ -175,7 +175,9 @@ function mostrarOpciones(textoPregunta, opciones) {
   const ancho = scene.scale.width;
   const alto = scene.scale.height;
 
-  const fondo = scene.add.rectangle(ancho / 2, alto / 2 + 100, 300, 120, 0x000000, 0.7).setOrigin(0.5).setStrokeStyle(2, 0xffffff).setRadius(12);
+  const fondo = scene.add.rectangle(ancho / 2, alto / 2 + 100, 300, 120, 0x000000, 0.7)
+    .setOrigin(0.5)
+    .setStrokeStyle(2, 0xffffff);
 
   const texto = scene.add.text(ancho / 2, alto / 2 + 60, textoPregunta, {
     fontFamily: '"Press Start 2P"',
@@ -201,18 +203,21 @@ function mostrarOpciones(textoPregunta, opciones) {
     }).setOrigin(0.5).setInteractive({ useHandCursor: true }).setResolution(4);
 
     btn.on('pointerdown', () => {
-      // Elimina los elementos de la opción
       fondo.destroy();
       texto.destroy();
       botones.forEach(b => b.destroy());
-
-      // Ejecuta la acción correspondiente
       opcion.accion();
     });
 
     botones.push(btn);
   });
+
+  // Asegurar que estén encima del libro
+  scene.children.bringToTop(fondo);
+  scene.children.bringToTop(texto);
+  botones.forEach(btn => scene.children.bringToTop(btn));
 }
+
 
 
 function escribirTexto(textObject, message, speed = 30, callback, backgroundColor = null) {
@@ -396,21 +401,23 @@ case 3:
       break;
       
     case 12:
+  if (leo) leo.setVisible(false); // Ocultar a Leo antes
+
   mostrarNPC('libro', scene.scale.width / 2, scene.scale.height + 100, scene.scale.width / 2);
+
   scene.tweens.add({
     targets: npc,
     y: scene.scale.height / 2,
     duration: 1000,
     ease: 'Power2',
     onComplete: () => {
-      if (leo) leo.setVisible(false);
       speakerActual = 'yopi';
       escribirTexto(texto, "Un librito apareció, y en él está escrito todo lo que te quiero decir.", 30, () => {
         mostrarOpciones("¿Quieres abrir el librito?", [
           {
             texto: "Sí",
             accion: () => {
-              currentStep++; // pasa al case 13
+              currentStep++; // Avanza al case 13
               avanzarHistoria();
             }
           },
@@ -418,7 +425,7 @@ case 3:
             texto: "No",
             accion: () => {
               speakerActual = 'yopi';
-              escribirTexto(texto, "Tal vez más tarde... pero el mensaje siempre estará ahí para ti");
+              escribirTexto(texto, "Tal vez más tarde... pero el mensaje siempre estará ahí para ti 💌");
             }
           }
         ]);
@@ -427,12 +434,21 @@ case 3:
   });
   break;
 
-
 case 13:
-  if (npc) npc.destroy(); // Elimina el librito
+  if (npc) {
+    scene.tweens.add({
+      targets: npc,
+      alpha: 0,
+      duration: 500,
+      onComplete: () => {
+        npc.destroy();
+      }
+    });
+  }
   speakerActual = 'yopi';
   escribirTexto(texto, "Querido Leo: Gracias por existir. Gracias por ser tú. Eres lo mejor que me ha pasado y siempre quiero cuidarte.");
   break;
+
 
 
     case 14:
