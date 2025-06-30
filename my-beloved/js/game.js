@@ -262,7 +262,7 @@ function avanzarHistoria() {
         "Esta cartita guarda una promesa",
         "...una promesita sembrada en papel,",
         "que florece cada vez que me piensas",
-        "¡Puedes reclamarla al terminar!"
+        "¡Puedes reclamarla al terminar!",
         "¡Me la voy a guardar siempre!"
       );
       if (pasos.length > 0) pasos.shift()();
