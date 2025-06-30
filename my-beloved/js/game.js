@@ -217,7 +217,8 @@ function avanzarHistoria() {
         'conejito',
         "¡Mira quién viene ahí...!",
         "¡Hola, Leo!",
-        "Brinqué hasta aquí solo para pasarte un mensaje importante.",
+        "Brinqué hasta aquí...",
+        "Sólo para pasarte un mensaje importante",
         "Es de tu novio Alec...",
         "Me pidió que te recordara lo mucho que te ama",
         "¡Eso fue muy tierno!"
@@ -259,7 +260,7 @@ function avanzarHistoria() {
         'estrella',
         "Hola, Leo",
         "Brillas más de lo que crees",
-        "Alguien te ve como su luz.",
+        "Alguien te ve como su luz",
         "¡Qué palabras tan bonitas!"
       );
       if (pasos.length > 0) pasos.shift()();
@@ -269,7 +270,7 @@ function avanzarHistoria() {
         'carta',
         "¡Toma esto!",
         "Esta cartita guarda una promesa",
-        "...una promesita sembrada en papel,",
+        "...una promesa sembrada en papel,",
         "que florece cada vez que me piensas",
         "¡Puedes reclamarla al terminar!",
         "¡Sin duda lo haré!"
@@ -314,8 +315,8 @@ function avanzarHistoria() {
       escribirTexto(texto, "Querido Leo: Gracias por existir. Gracias por ser tú. Eres lo mejor que me ha pasado y siempre quiero cuidarte.");
       break;
     case 14:
-    alert('Fin de la demo, por favor ve a darle un besito a Alec...');
-      escribirTexto(texto, "Fin de la demo. Toca la pantalla para volver a empezar.");
+      alert('Fin de la demo, por favor ve a darle un besito a Alec ahora mismo !! ♡');
+      escribirTexto(texto, "Toca la pantalla para volver a empezar.");
       break;
     case 15:
       location.reload();
