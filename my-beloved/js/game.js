@@ -106,7 +106,7 @@ function mostrarTextoConFondo(message, speed = 30, callback = null) {
   const padding = 20;
   const boxWidth = scene.scale.width - 40;
   const isMobile = scene.scale.width < 800;
-  const fontSize = isMobile ? '13px' : '14px';
+  const fontSize = isMobile ? '12px' : '14px';
 
   if (scene.textoFondo) scene.textoFondo.destroy();
   if (texto) texto.destroy();
