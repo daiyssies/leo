@@ -293,8 +293,7 @@ function avanzarHistoria() {
       dialogoNPC(
         'conejito',
         "¡Hola, Leo!",
-        "Brinqué hasta aquí...",
-        "Sólo para pasarte un mensaje importante",
+        "Tengo pasarte un mensaje importante",
         "Es de tu novio Alec...",
         "Me pidió que te recordara lo mucho que te ama"
       );
@@ -421,7 +420,7 @@ function avanzarHistoria() {
         ease: 'Power2',
         onComplete: () => {
           speakerActual = 'yopi';
-          escribirTexto(texto, "Un librito apareció, y en él está escrito todo lo que te quiero decir.", 30, () => {
+          escribirTexto(texto, "Un librito apareció", 30, () => {
             esperarClickYMostrarOpciones();
           });
         }
@@ -475,7 +474,7 @@ function esperarClickYMostrarOpciones() {
         texto: "No",
         accion: () => {
           speakerActual = 'yopi';
-          escribirTexto(texto, "Tal vez más tarde... pero el mensaje siempre estará ahí para ti", 30, () => {
+          escribirTexto(texto, "Tal vez más tarde... pero siempre estará ahí para ti", 30, () => {
             currentStep = 13;
             avanzarHistoria();
           });
