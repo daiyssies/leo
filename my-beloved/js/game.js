@@ -6,7 +6,7 @@ let scene;
 let esperandoClick = false;
 let pasos = [];
 let fuenteCargada = false;
-let speakerActual = null; // Nuevo: para controlar el hablante
+let speakerActual = null;
 
 // Cargar fuente
 document.fonts.load('10pt "Press Start 2P"').then(() => {
@@ -212,13 +212,10 @@ function mostrarOpciones(textoPregunta, opciones) {
     botones.push(btn);
   });
 
-  // Asegurar que estén encima del libro
   scene.children.bringToTop(fondo);
   scene.children.bringToTop(texto);
   botones.forEach(btn => scene.children.bringToTop(btn));
 }
-
-
 
 function escribirTexto(textObject, message, speed = 30, callback, backgroundColor = null) {
   mostrarTextoConFondo(message, speed, callback, backgroundColor);
@@ -245,16 +242,22 @@ function dialogoNPC(key, ...lineas) {
     if (npc) npc.destroy();
     leo.setTexture('leo-serio');
     mostrarNPC(key);
-    escribirTexto(texto, lineas[0]);
+    escribirTexto(texto, lineas[0], 30, () => {
+      if (pasos.length > 0) pasos.shift()();
+    });
   });
   for (let i = 1; i < lineas.length - 1; i++) {
     pasos.push(() => {
-      escribirTexto(texto, lineas[i]);
+      escribirTexto(texto, lineas[i], 30, () => {
+        if (pasos.length > 0) pasos.shift()();
+      });
     });
   }
   pasos.push(() => {
     leo.setTexture('leo-sonriente');
-    escribirTexto(texto, lineas[lineas.length - 1]);
+    escribirTexto(texto, lineas[lineas.length - 1], 30, () => {
+      if (pasos.length > 0) pasos.shift()();
+    });
   });
 }
 
@@ -267,168 +270,148 @@ function avanzarHistoria() {
       escribirTexto(texto, "¡Leito! Ahí estás...");
       break;
     case 2:
-  speakerActual = 'yopi';
-  leo.setTexture('leo-feli');
-  escribirTexto(texto, "Te estaba buscando", 30, () => {
-    pasos.push(() => {
       speakerActual = 'yopi';
-      escribirTexto(texto, "¡Te tengo una sorpresa!");
-    });
-    if (pasos.length > 0) pasos.shift()();
-  });
-  break;
+      leo.setTexture('leo-feli');
+      escribirTexto(texto, "Te estaba buscando", 30, () => {
+        pasos.push(() => {
+          speakerActual = 'yopi';
+          escribirTexto(texto, "¡Te tengo una sorpresa!", 30, () => {
+            if (pasos.length > 0) pasos.shift()();
+          });
+        });
+        if (pasos.length > 0) pasos.shift()();
+      });
+      break;
 
-
-
-case 3:
-  dialogoNPC(
-    'conejito',
-    "¡Hola, Leo!",
-    "Brinqué hasta aquí...",
-    "Sólo para pasarte un mensaje importante",
-    "Es de tu novio Alec...",
-    "Me pidió que te recordara lo mucho que te ama"
-  );
-    pasos.push(() => {
-      speakerActual = 'leo';
-      escribirTexto(texto, "¡Eso fue muy tierno!");
-    });
-    if (pasos.length > 0) pasos.shift()();
-    break;
+    case 3:
+      dialogoNPC(
+        'conejito',
+        "¡Hola, Leo!",
+        "Brinqué hasta aquí...",
+        "Sólo para pasarte un mensaje importante",
+        "Es de tu novio Alec...",
+        "Me pidió que te recordara lo mucho que te ama"
+      );
+      pasos.push(() => {
+        speakerActual = 'leo';
+        escribirTexto(texto, "¡Eso fue muy tierno!", 30, () => {
+          if (pasos.length > 0) pasos.shift()();
+        });
+      });
+      if (pasos.length > 0) pasos.shift()();
+      break;
 
     case 4:
-    dialogoNPC(
-      'florecita',
-      "¡Hola, Leito!",
-      "Mis pétalos son tan suaves...",
-      "¡Como el amor que te tienen!"
-    );
-    pasos.push(() => {
-      speakerActual = 'leo';
-      escribirTexto(texto, "¡Qué bonito!");
-    });
-    if (pasos.length > 0) pasos.shift()();
-    break;
+      dialogoNPC('florecita', "¡Hola, Leito!", "Mis pétalos son tan suaves...", "¡Como el amor que te tienen!");
+      pasos.push(() => {
+        speakerActual = 'leo';
+        escribirTexto(texto, "¡Qué bonito!", 30, () => {
+          if (pasos.length > 0) pasos.shift()();
+        });
+      });
+      if (pasos.length > 0) pasos.shift()();
+      break;
 
     case 5:
-      dialogoNPC(
-        'fresita',
-        "LEO",
-        "¡Tú eres más dulce que yo!",
-        "Y eso que soy una fresita..."
-      );
+      dialogoNPC('fresita', "LEO", "¡Tú eres más dulce que yo!", "Y eso que soy una fresita...");
       pasos.push(() => {
-      speakerActual = 'leo';
-      escribirTexto(texto, "Awww");
-    });
-    if (pasos.length > 0) pasos.shift()();
-    break;
+        speakerActual = 'leo';
+        escribirTexto(texto, "Awww", 30, () => {
+          if (pasos.length > 0) pasos.shift()();
+        });
+      });
+      if (pasos.length > 0) pasos.shift()();
+      break;
+
     case 6:
-      dialogoNPC(
-        'gatito',
-        "Miau~",
-        "Incluso en los días grises...",
-        "Tú haces que todo se sienta más cálido"
-      );
+      dialogoNPC('gatito', "Miau~", "Incluso en los días grises...", "Tú haces que todo se sienta más cálido");
       pasos.push(() => {
-      speakerActual = 'leo';
-      escribirTexto(texto, "¡Gracias, minino!");
-    });
-    if (pasos.length > 0) pasos.shift()();
-    break;
+        speakerActual = 'leo';
+        escribirTexto(texto, "¡Gracias, minino!", 30, () => {
+          if (pasos.length > 0) pasos.shift()();
+        });
+      });
+      if (pasos.length > 0) pasos.shift()();
+      break;
+
     case 7:
-      dialogoNPC(
-        'estrella',
-        "Hola, Leo",
-        "Brillas más de lo que crees",
-        "Alguien te ve como su luz"
-      );
+      dialogoNPC('estrella', "Hola, Leo", "Brillas más de lo que crees", "Alguien te ve como su luz");
       pasos.push(() => {
-      speakerActual = 'leo';
-      escribirTexto(texto, "¡Qué palabras tan bonitas!");
-    });
-    if (pasos.length > 0) pasos.shift()();
-    break;
+        speakerActual = 'leo';
+        escribirTexto(texto, "¡Qué palabras tan bonitas!", 30, () => {
+          if (pasos.length > 0) pasos.shift()();
+        });
+      });
+      if (pasos.length > 0) pasos.shift()();
+      break;
+
     case 8:
-      dialogoNPC(
-        'carta',
-        "¡Toma esto!",
-        "Esta cartita guarda una promesa",
-        "...una promesa sembrada en papel,",
-        "que florece cada vez que me piensas",
-        "¡Puedes reclamarla al terminar!"
-      );
+      dialogoNPC('carta', "¡Toma esto!", "Esta cartita guarda una promesa", "...una promesa sembrada en papel,", "que florece cada vez que me piensas", "¡Puedes reclamarla al terminar!");
       pasos.push(() => {
-      speakerActual = 'leo';
-      escribirTexto(texto, "¡Sin duda lo haré!");
-    });
-    if (pasos.length > 0) pasos.shift()();
-    break;
+        speakerActual = 'leo';
+        escribirTexto(texto, "¡Sin duda lo haré!", 30, () => {
+          if (pasos.length > 0) pasos.shift()();
+        });
+      });
+      if (pasos.length > 0) pasos.shift()();
+      break;
+
     case 9:
-      dialogoNPC(
-        'caja_chocolates',
-        "¡Un regalito!",
-        "No solo son dulces",
-        "Llevan besitos escondidos...",
-        "Pero no le digas a nadie :]"
-      );
+      dialogoNPC('caja_chocolates', "¡Un regalito!", "No solo son dulces", "Llevan besitos escondidos...", "Pero no le digas a nadie :]");
       pasos.push(() => {
-      speakerActual = 'leo';
-      escribirTexto(texto, "¡Jajaja, qué dulce!");
-    });
-    if (pasos.length > 0) pasos.shift()();
-    break;
+        speakerActual = 'leo';
+        escribirTexto(texto, "¡Jajaja, qué dulce!", 30, () => {
+          if (pasos.length > 0) pasos.shift()();
+        });
+      });
+      if (pasos.length > 0) pasos.shift()();
+      break;
+
     case 10:
-      dialogoNPC(
-        'niña_fresita',
-        "¡Hola, lindo Leo!",
-        "Alguien me dijo que...",
-        "¡Eres su persona favorita en todo el mundo!"
-      );
+      dialogoNPC('niña_fresita', "¡Hola, lindo Leo!", "Alguien me dijo que...", "¡Eres su persona favorita en todo el mundo!");
       pasos.push(() => {
-      speakerActual = 'leo';
-      escribirTexto(texto, "Me pregunto quién será...");
-    });
-    if (pasos.length > 0) pasos.shift()();
-    break;
+        speakerActual = 'leo';
+        escribirTexto(texto, "Me pregunto quién será...", 30, () => {
+          if (pasos.length > 0) pasos.shift()();
+        });
+      });
+      if (pasos.length > 0) pasos.shift()();
+      break;
+
     case 11:
       speakerActual = 'yopi';
       escribirTexto(texto, "Ah… espera, hay algo más...");
       break;
-      
+
     case 12:
-  if (leo) leo.setVisible(false); // Oculta a Leo antes
-
-  mostrarNPC('libro', scene.scale.width / 2, scene.scale.height + 100, scene.scale.width / 2);
-
-  scene.tweens.add({
-    targets: npc,
-    y: scene.scale.height / 2,
-    duration: 1000,
-    ease: 'Power2',
-    onComplete: () => {
-      speakerActual = 'yopi';
-      // Mostramos el texto narrativo primero
-      escribirTexto(texto, "Un librito apareció, y en él está escrito todo lo que te quiero decir.", 30, () => {
-        // Cuando el jugador toca la pantalla después del texto, mostramos las opciones
-        esperarClickYMostrarOpciones();
+      if (leo) leo.setVisible(false);
+      mostrarNPC('libro', scene.scale.width / 2, scene.scale.height + 100, scene.scale.width / 2);
+      scene.tweens.add({
+        targets: npc,
+        y: scene.scale.height / 2,
+        duration: 1000,
+        ease: 'Power2',
+        onComplete: () => {
+          speakerActual = 'yopi';
+          escribirTexto(texto, "Un librito apareció, y en él está escrito todo lo que te quiero decir.", 30, () => {
+            esperarClickYMostrarOpciones();
+          });
+        }
       });
-    }
-  });
-  break;
+      break;
 
-
-
-case 13:
-  break;
+    case 13:
+      break;
 
     case 14:
       speakerActual = 'yopi';
       escribirTexto(texto, "Toca la pantalla para volver a empezar.");
       break;
+
     case 15:
       location.reload();
       break;
+
     default:
       break;
   }
@@ -473,4 +456,3 @@ function esperarClickYMostrarOpciones() {
     ]);
   });
 }
-
