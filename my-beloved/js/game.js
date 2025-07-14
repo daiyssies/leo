@@ -162,14 +162,19 @@ function mostrarTextoConFondo(message, speed = 30, callback = null, backgroundCo
         scene.input.once('pointerdown', () => {
           esperandoClick = false;
           contenedor.destroy();
-          if (callback) callback();
-          else if (pasos.length > 0) pasos.shift()();
+          if (callback) {
+            callback();
+          } else if (pasos.length > 0) {
+            const siguiente = pasos.shift();
+            siguiente();
+          }
         });
       }
     },
     loop: true
   });
 }
+
 
 function escribirTexto(textObject, message, speed = 30, callback = null, backgroundColor = null) {
   mostrarTextoConFondo(message, speed, callback, backgroundColor);
