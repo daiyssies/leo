@@ -2,6 +2,8 @@ let game;
 let currentStep = 0;
 let texto, leo, npc;
 let scene;
+let textoTimer = null; // ← este controlará el timer de escritura
+
 
 let esperandoClick = false;
 let pasos = [];
@@ -102,6 +104,13 @@ function mostrarTextoConFondo(message, speed = 30, callback = null, backgroundCo
   const padding = 20;
   const boxWidth = scene.scale.width - 40;
 
+  // Cancelar cualquier timer anterior
+  if (textoTimer) {
+    textoTimer.remove(false);
+    textoTimer = null;
+  }
+
+  // Eliminar texto anterior
   if (scene.textoFondo) scene.textoFondo.destroy();
   if (texto) texto.destroy();
 
@@ -123,19 +132,22 @@ function mostrarTextoConFondo(message, speed = 30, callback = null, backgroundCo
     ? backgroundColor
     : coloresPorPersonaje[speakerActual] || 0x8cb1dc;
 
-  texto = scene.add.text(0, 0, '', {
+  const estiloTexto = {
     fontFamily: '"Press Start 2P"',
-    fontSize: 16,
+    fontSize: '16px',
     color: '#ffffff',
     wordWrap: { width: boxWidth - padding * 2 },
     lineSpacing: 7,
     stroke: '#000000',
     strokeThickness: 3
-  }).setResolution(4);
+  };
 
-  const tempText = scene.add.text(0, 0, message, texto.style).setWordWrapWidth(boxWidth - padding * 2).setVisible(false);
+  texto = scene.add.text(0, 0, '', estiloTexto).setResolution(4);
+
+  const tempText = scene.add.text(0, 0, message, estiloTexto).setWordWrapWidth(boxWidth - padding * 2).setVisible(false);
   const textHeight = tempText.height;
   const textWidth = boxWidth;
+  tempText.destroy();
 
   const fondo = scene.add.graphics();
   fondo.fillStyle(color, 1);
@@ -148,32 +160,29 @@ function mostrarTextoConFondo(message, speed = 30, callback = null, backgroundCo
   texto.setPosition(padding, padding);
 
   scene.textoFondo = contenedor;
-  tempText.destroy();
 
   let i = 0;
-  let timer = scene.time.addEvent({
+  textoTimer = scene.time.addEvent({
     delay: speed,
     callback: () => {
       texto.text += message[i];
       i++;
       if (i === message.length) {
-        timer.remove();
+        textoTimer.remove();
+        textoTimer = null;
         esperandoClick = true;
         scene.input.once('pointerdown', () => {
           esperandoClick = false;
           contenedor.destroy();
-          if (callback) {
-            callback();
-          } else if (pasos.length > 0) {
-            const siguiente = pasos.shift();
-            siguiente();
-          }
+          if (callback) callback();
+          else if (pasos.length > 0) pasos.shift()();
         });
       }
     },
     loop: true
   });
 }
+
 
 
 function escribirTexto(textObject, message, speed = 30, callback = null, backgroundColor = null) {
