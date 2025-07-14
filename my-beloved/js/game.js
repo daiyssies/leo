@@ -3,7 +3,6 @@ let scene;
 let texto, leo, npc;
 let pasos = [];
 let esperandoClick = false;
-let currentStep = 0;
 let fuenteCargada = false;
 let speakerActual = null;
 let textoTimer = null;
@@ -73,6 +72,7 @@ function create() {
   scene.add.image(centerX, centerY, 'background');
   leo = scene.add.image(120, scene.scale.height - 190, 'leo-serio').setScale(0.7);
 
+  // Único listener para avanzar la historia con clic
   scene.input.on('pointerdown', () => {
     if (!esperandoClick) return;
     esperandoClick = false;
@@ -149,21 +149,11 @@ function mostrarTextoConFondo(mensaje, velocidad = 30, callback = null, backgrou
         textoTimer.remove();
         textoTimer = null;
         esperandoClick = true;
-        scene.input.once('pointerdown', () => {
-          esperandoClick = false;
-          contenedor.destroy();
-          if (callback) callback();
-          else if (pasos.length > 0) pasos.shift()();
-        });
+        if (callback) callback();
       }
     },
     loop: true
   });
-}
-
-function mostrarTextoDe(nombre, mensaje) {
-  speakerActual = nombre;
-  pasos.push(() => mostrarTextoConFondo(mensaje));
 }
 
 function mostrarNPC(nombre, x = null, y = null) {
@@ -180,29 +170,9 @@ function mostrarNPC(nombre, x = null, y = null) {
   });
 }
 
-function crearPasosDialogo(personaje, ...lineas) {
-  pasos.push(() => {
-    if (npc) npc.destroy();
-    speakerActual = personaje;
-    leo.setTexture('leo-serio');
-    mostrarNPC(personaje);
-  });
-
-  lineas.forEach((linea, i) => {
-    pasos.push(() => {
-      if (i === lineas.length - 1) {
-        leo.setTexture('leo-sonriente');
-      }
-      mostrarTextoConFondo(linea);
-    });
-  });
-}
-
-
 function iniciarHistoria() {
   pasos = [];
 
-  // 🐰 Paso 1: Yopi aparece
   pasos.push(() => {
     speakerActual = 'yopi';
     leo.setTexture('leo-feli');
@@ -213,7 +183,6 @@ function iniciarHistoria() {
     mostrarTextoConFondo("Te estaba buscando.");
   });
 
-  // 📨 Paso 2: Conejito llega con el mensaje
   pasos.push(() => {
     speakerActual = 'conejito';
     if (npc) npc.destroy();
@@ -243,16 +212,13 @@ function iniciarHistoria() {
     mostrarTextoConFondo("¡Eso fue muy tierno!");
   });
 
-  // 🎁 Paso 3: Ahora sí, Yopi habla de la sorpresa
   pasos.push(() => {
     speakerActual = 'yopi';
     leo.setTexture('leo-feli');
     mostrarTextoConFondo("¡Te tengo una sorpresa!");
   });
 
-  // Aquí siguen los demás personajes: florecita, fresita, etc.
-  // Los podemos agregar paso por paso igual que esto 🧁🌟
+  // Continúa con los demás NPC y diálogos aquí...
 
-  if (pasos.length > 0) pasos.shift()(); // Iniciar historia
+  pasos.shift()(); // Comenzar la historia
 }
-
