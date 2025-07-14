@@ -273,27 +273,27 @@ function avanzarHistoria() {
 
   switch (currentStep) {
     case 1:
-      speakerActual = 'yopi';
-      escribirTexto(texto, "¡Leito! Ahí estás...");
+      pasos.push(() => {
+        speakerActual = 'yopi';
+        escribirTexto(texto, "¡Leito! Ahí estás...");
+      });
+      pasos.push(() => {
+        speakerActual = 'yopi';
+        leo.setTexture('leo-feli');
+        escribirTexto(texto, "Te estaba buscando");
+      });
+      pasos.push(() => {
+        speakerActual = 'yopi';
+        escribirTexto(texto, "Tengo algo que mostrarte...");
+      });
+      if (pasos.length > 0) pasos.shift()();
       break;
+
     case 2:
-    speakerActual = 'yopi';
-    leo.setTexture('leo-feli');
-    pasos.push(() => {
-      escribirTexto(texto, "Te estaba buscando");
-    });
-    pasos.push(() => {
-      escribirTexto(texto, "¡Te tengo una sorpresa!");
-    });
-    if (pasos.length > 0) pasos.shift()();
-    break;
-
-
-    case 3:
       dialogoNPC(
         'conejito',
         "¡Hola, Leo!",
-        "Tengo pasarte un mensaje importante",
+        "Tengo que pasarte un mensaje importante",
         "Es de tu novio Alec...",
         "Me pidió que te recordara lo mucho que te ama"
       );
@@ -301,10 +301,14 @@ function avanzarHistoria() {
         speakerActual = 'leo';
         escribirTexto(texto, "¡Eso fue muy tierno!");
       });
+      pasos.push(() => {
+        speakerActual = 'yopi';
+        escribirTexto(texto, "¿Viste? Te dije que era una sorpresa.");
+      });
       if (pasos.length > 0) pasos.shift()();
       break;
 
-    case 4:
+    case 3:
       dialogoNPC(
         'florecita',
         "¡Hola, Leito!",
@@ -318,7 +322,7 @@ function avanzarHistoria() {
       if (pasos.length > 0) pasos.shift()();
       break;
 
-    case 5:
+    case 4:
       dialogoNPC(
         'fresita',
         "LEO",
@@ -332,7 +336,7 @@ function avanzarHistoria() {
       if (pasos.length > 0) pasos.shift()();
       break;
 
-    case 6:
+    case 5:
       dialogoNPC(
         'gatito',
         "Miau~",
@@ -346,7 +350,7 @@ function avanzarHistoria() {
       if (pasos.length > 0) pasos.shift()();
       break;
 
-    case 7:
+    case 6:
       dialogoNPC(
         'estrella',
         "Hola, Leo",
@@ -360,7 +364,7 @@ function avanzarHistoria() {
       if (pasos.length > 0) pasos.shift()();
       break;
 
-    case 8:
+    case 7:
       dialogoNPC(
         'carta',
         "¡Toma esto!",
@@ -376,7 +380,7 @@ function avanzarHistoria() {
       if (pasos.length > 0) pasos.shift()();
       break;
 
-    case 9:
+    case 8:
       dialogoNPC(
         'caja_chocolates',
         "¡Un regalito!",
@@ -391,7 +395,7 @@ function avanzarHistoria() {
       if (pasos.length > 0) pasos.shift()();
       break;
 
-    case 10:
+    case 9:
       dialogoNPC(
         'niña_fresita',
         "¡Hola, lindo Leo!",
@@ -405,81 +409,51 @@ function avanzarHistoria() {
       if (pasos.length > 0) pasos.shift()();
       break;
 
+    case 10:
+      pasos.push(() => {
+        speakerActual = 'yopi';
+        escribirTexto(texto, "Ah… espera, hay algo más...");
+      });
+      if (pasos.length > 0) pasos.shift()();
+      break;
+
     case 11:
-      speakerActual = 'yopi';
-      escribirTexto(texto, "Ah… espera, hay algo más...");
+      pasos.push(() => {
+        if (leo) leo.setVisible(false);
+        mostrarNPC('libro', scene.scale.width / 2, scene.scale.height + 100, scene.scale.width / 2);
+        scene.tweens.add({
+          targets: npc,
+          y: scene.scale.height / 2,
+          duration: 1000,
+          ease: 'Power2',
+          onComplete: () => {
+            speakerActual = 'yopi';
+            escribirTexto(texto, "Un librito apareció", 30, () => {
+              esperarClickYMostrarOpciones();
+            });
+          }
+        });
+      });
+      if (pasos.length > 0) pasos.shift()();
       break;
 
     case 12:
-      if (leo) leo.setVisible(false);
-      mostrarNPC('libro', scene.scale.width / 2, scene.scale.height + 100, scene.scale.width / 2);
-      scene.tweens.add({
-        targets: npc,
-        y: scene.scale.height / 2,
-        duration: 1000,
-        ease: 'Power2',
-        onComplete: () => {
-          speakerActual = 'yopi';
-          escribirTexto(texto, "Un librito apareció", 30, () => {
-            esperarClickYMostrarOpciones();
-          });
-        }
-      });
+      // vacío, se maneja desde las opciones
       break;
 
     case 13:
+      pasos.push(() => {
+        speakerActual = 'yopi';
+        escribirTexto(texto, "Toca la pantalla para volver a empezar.");
+      });
+      if (pasos.length > 0) pasos.shift()();
       break;
 
     case 14:
-      speakerActual = 'yopi';
-      escribirTexto(texto, "Toca la pantalla para volver a empezar.");
-      break;
-
-    case 15:
       location.reload();
       break;
 
     default:
       break;
   }
-}
-
-function esperarClickYMostrarOpciones() {
-  esperandoClick = true;
-  scene.input.once('pointerdown', () => {
-    esperandoClick = false;
-
-    mostrarOpciones("¿Quieres abrir el librito?", [
-      {
-        texto: "Sí",
-        accion: () => {
-          if (npc) {
-            scene.tweens.add({
-              targets: npc,
-              alpha: 0,
-              duration: 500,
-              onComplete: () => {
-                npc.destroy();
-                speakerActual = 'yopi';
-                escribirTexto(texto, "Querido Leo: Gracias por existir. Gracias por ser tú. Eres lo mejor que me ha pasado y siempre quiero cuidarte.", 30, () => {
-                  currentStep = 13;
-                  avanzarHistoria();
-                });
-              }
-            });
-          }
-        }
-      },
-      {
-        texto: "No",
-        accion: () => {
-          speakerActual = 'yopi';
-          escribirTexto(texto, "Tal vez más tarde... pero siempre estará ahí para ti", 30, () => {
-            currentStep = 13;
-            avanzarHistoria();
-          });
-        }
-      }
-    ]);
-  });
 }
