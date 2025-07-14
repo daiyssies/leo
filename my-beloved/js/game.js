@@ -202,9 +202,9 @@ function crearPasosDialogo(personaje, ...lineas) {
 function iniciarHistoria() {
   pasos = [];
 
-  // Paso 1: Yopi aparece
-  speakerActual = 'yopi';
+  // 🐰 Paso 1: Yopi aparece
   pasos.push(() => {
+    speakerActual = 'yopi';
     leo.setTexture('leo-feli');
     mostrarTextoConFondo("¡Leito! Ahí estás...");
   });
@@ -213,21 +213,46 @@ function iniciarHistoria() {
     mostrarTextoConFondo("Te estaba buscando.");
   });
 
-  // Paso 2: Conejito aparece
-  crearPasosDialogo(
-    'conejito',
-    "¡Hola, Leo!",
-    "Tengo que pasarte un mensaje importante...",
-    "Es de tu novio Alec...",
-    "Me pidió que te recordara lo mucho que te ama."
-  );
+  // 📨 Paso 2: Conejito llega con el mensaje
+  pasos.push(() => {
+    speakerActual = 'conejito';
+    if (npc) npc.destroy();
+    leo.setTexture('leo-serio');
+    mostrarNPC('conejito');
+  });
 
-  mostrarTextoDe('leo', "¡Eso fue muy tierno!");
+  pasos.push(() => {
+    mostrarTextoConFondo("¡Hola, Leo!");
+  });
 
-  // Paso 3: Yopi dice sorpresa
-  mostrarTextoDe('yopi', "¡Te tengo una sorpresa!");
+  pasos.push(() => {
+    mostrarTextoConFondo("Tengo que pasarte un mensaje importante...");
+  });
 
-  // Luego puedes seguir agregando más pasos con `crearPasosDialogo()` y `mostrarTextoDe()`.
+  pasos.push(() => {
+    mostrarTextoConFondo("Es de tu novio Alec...");
+  });
 
-  if (pasos.length > 0) pasos.shift()();
+  pasos.push(() => {
+    mostrarTextoConFondo("Me pidió que te recordara lo mucho que te ama.");
+  });
+
+  pasos.push(() => {
+    speakerActual = 'leo';
+    leo.setTexture('leo-sonriente');
+    mostrarTextoConFondo("¡Eso fue muy tierno!");
+  });
+
+  // 🎁 Paso 3: Ahora sí, Yopi habla de la sorpresa
+  pasos.push(() => {
+    speakerActual = 'yopi';
+    leo.setTexture('leo-feli');
+    mostrarTextoConFondo("¡Te tengo una sorpresa!");
+  });
+
+  // Aquí siguen los demás personajes: florecita, fresita, etc.
+  // Los podemos agregar paso por paso igual que esto 🧁🌟
+
+  if (pasos.length > 0) pasos.shift()(); // Iniciar historia
 }
+
