@@ -287,8 +287,8 @@ function avanzarHistoria() {
       dialogoNPC(
         'conejito',
         "¡Hola, Leo!",
-        "Brinqué hasta aquí...",
-        "Sólo para pasarte un mensaje importante",
+        "Vine hasta aquí...",
+        "Tengo un mensaje importante",
         "Es de tu novio Alec...",
         "Me pidió que te recordara lo mucho que te ama"
       );
